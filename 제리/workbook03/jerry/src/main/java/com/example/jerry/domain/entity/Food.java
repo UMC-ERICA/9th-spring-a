@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "food")
+@Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
 public class Food {
 
     @Id
@@ -15,29 +16,12 @@ public class Food {
     @Column(name = "category_id", nullable = false)
     private Integer categoryId;
 
-    @Column(length = 10, nullable = false)
-    private String category;
-
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false, unique = true)
+    private FoodCategory category;
 
     // 생성자
-    public Food(String category) {
-        this.category = category;
-    }
-
-    // Getters and Setters
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
+    public Food(FoodCategory category) {
         this.category = category;
     }
 }
