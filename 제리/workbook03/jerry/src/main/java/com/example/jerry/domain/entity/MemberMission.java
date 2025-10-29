@@ -8,18 +8,18 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class UserMission {
+public class MemberMission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_mission_id", nullable = false)
+    @Column(name = "member_mission_id", nullable = false)
     private Integer userMissionId;
 
     @Column(nullable = false)
     private Boolean clear;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,7 +28,7 @@ public class UserMission {
 
 
     // 생성자
-    public UserMission(Boolean clear, User user, Mission mission) {
+    public MemberMission(Boolean clear, User user, Mission mission) {
         this.clear = clear;
         this.user = user;
         this.mission = mission;

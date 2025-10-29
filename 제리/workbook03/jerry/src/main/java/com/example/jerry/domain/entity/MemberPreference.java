@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class UserPreference {
+public class MemberPreference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class UserPreference {
     private Integer preferenceId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,8 +24,8 @@ public class UserPreference {
     private Food category;
 
     // 생성자
-    public UserPreference(User user, Food category) {
-        this.user = user;
+    public MemberPreference(User member, Food category) {
+        this.user = member;
         this.category = category;
     }
 }
