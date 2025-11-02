@@ -2,6 +2,7 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import umc.server.domain.member.enums.FoodType;
 
 @Entity
 @Builder
@@ -15,5 +16,6 @@ public class Food {
     private Long id;
 
     @Column(name = "food_name", nullable = false)
-    private String foodName;
+    @Enumerated(EnumType.STRING)
+    private FoodType foodName;
 }

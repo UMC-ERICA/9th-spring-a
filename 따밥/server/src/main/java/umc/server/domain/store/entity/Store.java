@@ -40,4 +40,8 @@ public class Store {
 
     @Column(name = "break_end_time")
     private LocalTime breakEndTime;
+
+    // StoreAddress의 store 필드와 매핑
+    @OneToOne(mappedBy = "store", fetch = FetchType.LAZY)
+    private StoreAddress storeAddress;
 }

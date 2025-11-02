@@ -11,4 +11,32 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT r FROM Review r JOIN FETCH r.member WHERE r.store.id = :storeId")
     List<Review> findByStoreIdWithMember(@Param("storeId") Long storeId);
+
+    // 2025.11.02 리뷰 검색 기능 추가
+    // 지역 조회
+    @Query("SELECT r FROM Review r " +
+            "JOIN r.store s " +
+            "JOIN s.storeAddress sa " +
+            "WHERE (sa.addr1 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr2 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr3 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr4 LIKE CONCAT('%', :addr, '%')) " +
+            "ORDER BY r.createdAt DESC ")
+    List<Review> findByAddr(@Param("addr") String addr);
+    
+    // 별점 조회
+    List<Review> findByScoreOrderByCreatedAtDesc(Double score);
+    
+    // 지역 + 별점 조회
+    @Query("SELECT r FROM Review r " +
+            "JOIN r.store s " +
+            "JOIN s.storeAddress sa " +
+            "WHERE (sa.addr1 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr2 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr3 LIKE CONCAT('%', :addr, '%') " +
+            "OR sa.addr4 LIKE CONCAT('%', :addr, '%')) " +
+            "AND r.score >= :score AND r.score < :score + 1 " +
+            "ORDER BY r.createdAt DESC")
+    List<Review> findByAddrAndScore(@Param("addr") String addr, @Param("score") int score);
+
 }
