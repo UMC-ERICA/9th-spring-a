@@ -2,6 +2,7 @@ package umc.server.domain.review.service;
 
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.review.entity.QReview;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
@@ -11,6 +12,7 @@ import umc.server.domain.store.entity.QStoreAddress;
 import java.util.List;
 
 @Service
+@Transactional
 public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
