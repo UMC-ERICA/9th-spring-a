@@ -42,6 +42,7 @@ public class MemberFoodTest {
                         .birth(LocalDate.of(2003, 9, 4))
                         .point(100)
                         .email("n1@test.com")
+                        .phoneNumber("010-1111-2222")
                         .build());
 
         Member m2 = memberRepository.save(
@@ -51,6 +52,7 @@ public class MemberFoodTest {
                         .birth(LocalDate.of(2003, 3, 3))
                         .point(100)
                         .email("n2@test.com")
+                        .phoneNumber("010-1111-2222")
                         .build());
 
 

@@ -32,8 +32,12 @@ dependencies {
     implementation 'io.github.openfeign.querydsl:querydsl-jpa:7.0'
     implementation 'io.github.openfeign.querydsl:querydsl-core:7.0'
 
+    // 테스트용 h2
+    testImplementation 'com.h2database:h2'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
+
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "io.github.openfeign.querydsl:querydsl-apt:7.0:jpa"
@@ -43,6 +47,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+compileTestJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
@@ -59,6 +69,7 @@ sourceSets {
 tasks.withType(JavaCompile).configureEach {
     options.generatedSourceOutputDirectory.set(querydslDir)
 }
+
 
 // clean 태스크에 생성 폴더 삭제 로직 추가
 clean.doLast {
