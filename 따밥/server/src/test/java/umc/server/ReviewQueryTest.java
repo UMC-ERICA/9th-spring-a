@@ -263,4 +263,18 @@ public class ReviewQueryTest {
         }
 
     }
+
+    @Test
+    @DisplayName("query type이 score일 때")
+    void queryTypeScore() {
+        List<Review> res = reviewQueryService.searchReview("4.0", "score");
+        assertThat(res).hasSize(9);
+    }
+
+    @Test
+    @DisplayName("query type이 both 일 때")
+    void queryTypeBoth() {
+        List<Review> res = reviewQueryService.searchReview("서울&4", "both");
+        assertThat(res).hasSize(6);
+    }
 }
