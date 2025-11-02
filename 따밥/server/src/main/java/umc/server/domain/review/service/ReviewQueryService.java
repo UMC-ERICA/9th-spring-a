@@ -18,6 +18,42 @@ public class ReviewQueryService {
         this.reviewRepository = reviewRepository;
     }
 
+    public List<Review> searchSpecificMemberReview(
+            String memberId,
+            String query,
+            String type
+    ) {
+        // Q클래스 정의
+        QReview review = QReview.review;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(review.member.id.eq(Long.parseLong(memberId)));
+
+        if (type.equals("store")){
+            Long storeId = Long.parseLong(query);
+            builder.and(review.store.id.eq(storeId));
+        }
+
+        if (type.equals("score")){
+            builder.and(review.score.goe(Double.parseDouble(query)))
+                    .and(review.score.lt(Double.parseDouble(query) + 1));
+        }
+
+        if (type.equals("both")){
+            String firstQuery = query.split("&")[0];
+            String secondQuery = query.split("&")[1];
+
+            Long storeId = Long.parseLong(firstQuery);
+            builder.and(review.store.id.eq(storeId));
+            builder.and(review.score.goe(Double.parseDouble(secondQuery)))
+                    .and(review.score.lt(Double.parseDouble(secondQuery) + 1));
+        }
+
+        List<Review> reviewList = reviewRepository.searchReview(builder);
+
+        return reviewList;
+    }
+
     public List<Review> searchReview(
             String query,
             String type

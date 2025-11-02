@@ -1,11 +1,11 @@
 package umc.server;
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.member.repository.MemberRepository;
@@ -41,10 +41,17 @@ public class ReviewQueryTest {
     @Autowired
     private ReviewQueryService reviewQueryService;
 
+    Member m1, m2, m3;
+    Store store1, store2, store3, store4;
 
     @BeforeEach
     void setUp() {
-        Member m1 = memberRepository.save(
+        reviewRepository.deleteAll();
+        storeAddressRepository.deleteAll();
+        storeRepository.deleteAll();
+        memberRepository.deleteAll();
+
+        m1 = memberRepository.save(
                 Member.builder()
                         .nicknname("N1")
                         .gender(Gender.FEMALE)
@@ -54,7 +61,7 @@ public class ReviewQueryTest {
                         .phoneNumber("010-1111-2222")
                         .build());
 
-        Member m2 = memberRepository.save(
+        m2 = memberRepository.save(
                 Member.builder()
                         .nicknname("N2")
                         .gender(Gender.MALE)
@@ -64,7 +71,7 @@ public class ReviewQueryTest {
                         .phoneNumber("010-1111-2222")
                         .build());
 
-        Member m3 = memberRepository.save(
+        m3 = memberRepository.save(
                 Member.builder()
                         .nicknname("N3")
                         .gender(Gender.FEMALE)
@@ -75,28 +82,28 @@ public class ReviewQueryTest {
                         .build());
 
         // Store 생성
-        Store store1 = storeRepository.save(
+        store1 = storeRepository.save(
                 Store.builder()
                         .storeName("강남 맛집")
                         .openingTime(LocalTime.of(10, 0))
                         .closingTime(LocalTime.of(22, 0))
                         .build());
 
-        Store store2 = storeRepository.save(
+        store2 = storeRepository.save(
                 Store.builder()
                         .storeName("홍대 카페")
                         .openingTime(LocalTime.of(9, 0))
                         .closingTime(LocalTime.of(23, 0))
                         .build());
 
-        Store store3 = storeRepository.save(
+        store3 = storeRepository.save(
                 Store.builder()
                         .storeName("이태원 레스토랑")
                         .openingTime(LocalTime.of(11, 0))
                         .closingTime(LocalTime.of(23, 30))
                         .build());
 
-        Store store4 = storeRepository.save(
+        store4 = storeRepository.save(
                 Store.builder()
                         .storeName("부산 해산물")
                         .openingTime(LocalTime.of(10, 0))
@@ -276,5 +283,36 @@ public class ReviewQueryTest {
     void queryTypeBoth() {
         List<Review> res = reviewQueryService.searchReview("서울&4", "both");
         assertThat(res).hasSize(6);
+    }
+
+    @Test
+    @DisplayName("특정 멤버의 가게별 리뷰")
+    void searchMemberReviewByStore() {
+        String memberId = String.valueOf(m1.getId());
+        String storeId = String.valueOf(store1.getId());
+
+        List<Review> res = reviewQueryService.searchSpecificMemberReview(memberId, storeId, "store");
+        assertThat(res).hasSize(1);  // N1이 강남맛집에 쓴 리뷰 1개
+    }
+
+    @Test
+    @DisplayName("특정 멤버의 별점별 리뷰")
+    void searchMemberReviewByScore() {
+        String memberId = String.valueOf(m1.getId());
+
+        List<Review> res = reviewQueryService.searchSpecificMemberReview(memberId, "5", "score");
+        assertThat(res).hasSize(3);  // N1의 5점 리뷰 3개
+    }
+
+    @Test
+    @DisplayName("특정 멤버의 가게+별점 리뷰")
+    void searchMemberReviewByBoth() {
+        String memberId = String.valueOf(m1.getId());
+        String storeId = String.valueOf(store1.getId());
+        String queryParam = storeId + "&5";
+
+        List<Review> res = reviewQueryService.searchSpecificMemberReview(memberId, queryParam, "both");
+
+        assertThat(res).hasSize(1);  // N1이 강남맛집에 쓴 5점 리뷰 1개
     }
 }

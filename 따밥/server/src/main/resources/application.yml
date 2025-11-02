@@ -13,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect # Hibernate?? ??? MySQL ??(dialect) ??
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true #  SQL 쿼리 예쁘게
