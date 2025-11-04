@@ -23,14 +23,14 @@ public class PointHistory {
     private Mission mission;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
 
     // 생성자
-    public PointHistory(Long points, Mission mission, User user) {
+    public PointHistory(Long points, Mission mission, Member member) {
         this.points = points;
         this.mission = mission;
-        this.user = user;
+        this.member = member;
     }
 }
