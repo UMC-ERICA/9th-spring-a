@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.server.domain.member.entity.Member;
-import umc.server.domain.store.entity.Store;
 import umc.server.global.BaseEntity;
 
 import java.util.Date;

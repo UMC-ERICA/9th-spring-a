@@ -1,6 +1,5 @@
 package umc.server.domain.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +29,6 @@ public class Question {
     private Type type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 }
