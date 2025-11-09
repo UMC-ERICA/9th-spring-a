@@ -30,8 +30,8 @@ public class Review {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurants_id", nullable = false)
@@ -43,11 +43,11 @@ public class Review {
     }
 
     // 전체 생성자
-    public Review(String content, Byte rating, String photo, Member member, Restaurant restaurant) {
+    public Review(String content, Byte rating, String photo, User user, Restaurant restaurant) {
         this.content = content;
         this.rating = rating;
         this.photo = photo;
-        this.member = member;
+        this.user = user;
         this.restaurant = restaurant;
     }
 }

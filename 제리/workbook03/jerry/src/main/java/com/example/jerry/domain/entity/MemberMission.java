@@ -20,7 +20,7 @@ public class MemberMission {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id", nullable = false)
@@ -28,9 +28,9 @@ public class MemberMission {
 
 
     // 생성자
-    public MemberMission(Boolean clear, Member user, Mission mission) {
+    public MemberMission(Boolean clear, User user, Mission mission) {
         this.clear = clear;
-        this.member = member;
+        this.user = user;
         this.mission = mission;
     }
 }
