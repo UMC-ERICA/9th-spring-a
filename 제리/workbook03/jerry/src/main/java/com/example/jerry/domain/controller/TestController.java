@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/temp")
 public class TestController {
 
+    private final TestQueryService testQueryService;
+
     @GetMapping("/test")
     public ApiResponse<TestResDto.Testing> test() throws Exception {
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;
         return ApiResponse.onSuccess(
                 code,
-                TestConverter.TestResDto("This is Test!")
+                TestConverter.toTestingDTO("This is Test!")
         );
     }
 
@@ -32,7 +34,7 @@ public class TestController {
             @RequestParam Long flag
     ) {
 
-        TestQueryService.checkFlag(flag);
+        testQueryService.checkFlag(flag);
 
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;

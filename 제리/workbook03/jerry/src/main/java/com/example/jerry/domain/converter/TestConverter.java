@@ -4,7 +4,6 @@ import com.example.jerry.domain.dto.response.TestResDto;
 import lombok.*;
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 
 public class TestConverter {
