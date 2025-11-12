@@ -9,6 +9,11 @@ import umc.server.domain.review.service.ReviewQueryDsl;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryDsl {
+    @Query("SELECT r FROM Review r " +
+    "JOIN FETCH r.store s " +
+    "WHERE r.member.id = :memberId " +
+    "ORDER BY r.createdAt DESC")
+    List<Review> findAllByMemberId(@Param("memberId") Long memberId);
 
     @Query("SELECT r FROM Review r JOIN FETCH r.member WHERE r.store.id = :storeId")
     List<Review> findByStoreIdWithMember(@Param("storeId") Long storeId);

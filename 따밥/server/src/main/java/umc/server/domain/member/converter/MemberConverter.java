@@ -6,6 +6,8 @@ import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.review.dto.res.ReviewResDTO;
+import umc.server.domain.review.entity.Review;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,23 @@ public class MemberConverter {
                         .collect(Collectors.toList()))
                 .nextCursor(nextCursor)
                 .hasNext(hasNext)
+                .build();
+    }
+    public static MemberResDTO.MyReviewsDTO toMyReviewsDTO(Member member, List<Review> reviews){
+        return MemberResDTO.MyReviewsDTO.builder()
+                .reviews(reviews.stream()
+                        .map(MemberConverter::toReviewInfo)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    private static ReviewResDTO.ReviewInfo toReviewInfo(Review review){
+        return ReviewResDTO.ReviewInfo.builder()
+                .reviewId(review.getId())
+                .storeName(review.getStore().getStoreName())
+                .score(review.getScore())
+                .description(review.getDescription())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 

@@ -12,4 +12,5 @@ public interface MemberService {
     MemberResDTO.HomeTopDTO getHomeTop(Long memberId, String region, Long cursor, int size);
     void missionSuccess(Long memberId, Long missionId);
     MemberResDTO.MyPageDTO getMyPage(Long memberId);
+    MemberResDTO.MyReviewsDTO getMyReviews(Long memberId);
 }

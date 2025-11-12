@@ -12,6 +12,8 @@ import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.mission.repository.MemberMissionRepository;
+import umc.server.domain.review.entity.Review;
+import umc.server.domain.review.repository.ReviewRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +22,12 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final MemberMissionRepository memberMissionRepository;
-
-    public MemberServiceImpl(MemberRepository memberRepository, MemberMissionRepository memberMissionRepository) {
+    private final ReviewRepository reviewRepository;
+    public MemberServiceImpl(MemberRepository memberRepository, MemberMissionRepository memberMissionRepository, ReviewRepository reviewRepository) {
 
         this.memberRepository = memberRepository;
         this.memberMissionRepository = memberMissionRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -102,6 +105,17 @@ public class MemberServiceImpl implements MemberService{
                 .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         return MemberConverter.toMyPageDTO(member);
+    }
+
+    @Override
+    public MemberResDTO.MyReviewsDTO getMyReviews(Long memberId) {
+        Member member = memberRepository.findMemberById(memberId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+
+        List<Review> reviews = reviewRepository.findAllByMemberId(memberId);
+
+        return MemberConverter.toMyReviewsDTO(member, reviews);
     }
 
     private void validateRequest(MemberReqDTO.JoinDTO request) {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
+
     @Query("SELECT mm FROM MemberMission mm " +
             "JOIN FETCH mm.mission m " +
             "JOIN FETCH m.store s " +
@@ -36,9 +37,10 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             @Param("cursor") Long cursor,
             Pageable pageable
     );
-    @Query("SELECT COUNT (mm) FROM MemberMission mm JOIN FETCH mm.mission m JOIN FETCH m.store s " +
+
+    @Query("SELECT COUNT(mm) FROM MemberMission mm " +
             "WHERE mm.member.id = :memberId " +
-            "AND mm.isCompleted = :isCompleted ")
+            "AND mm.isCompleted = :isCompleted")
     Integer countInProgressMissions(
             @Param("memberId") Long memberId,
             @Param("isCompleted") boolean isCompleted

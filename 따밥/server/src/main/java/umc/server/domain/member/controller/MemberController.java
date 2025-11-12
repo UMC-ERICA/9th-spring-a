@@ -47,4 +47,13 @@ public class MemberController {
         GeneralSuccessCode code = GeneralSuccessCode._OK;
         return ApiResponse.success(code, response);
     }
+
+    @GetMapping("/{memberId}/reviews")
+    public ApiResponse<MemberResDTO.MyReviewsDTO> getMyReviews(
+            @PathVariable Long memberId
+    ){
+        MemberResDTO.MyReviewsDTO response = memberService.getMyReviews(memberId);
+        GeneralSuccessCode code = GeneralSuccessCode._OK;
+        return ApiResponse.success(code, response);
+    }
 }

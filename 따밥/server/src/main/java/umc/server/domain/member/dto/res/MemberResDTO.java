@@ -3,7 +3,9 @@ package umc.server.domain.member.dto.res;
 import lombok.Builder;
 import lombok.Getter;
 import umc.server.domain.mission.dto.MissionResDTO;
+import umc.server.domain.review.dto.res.ReviewResDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MemberResDTO {
@@ -34,5 +36,11 @@ public class MemberResDTO {
         private Integer point;
         private String email;
         private String phoneNumber;
+    }
+
+    @Getter
+    @Builder
+    public static class MyReviewsDTO{
+        private List<ReviewResDTO.ReviewInfo> reviews;
     }
 }
