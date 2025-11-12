@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/auth")
 public class MemberController {
     private final MemberService memberService;
 
@@ -30,7 +30,7 @@ public class MemberController {
         );
     }
 
-    @PostMapping("/join")
+    @PostMapping("/users")
     public ApiResponse<Void> join(
         @RequestBody MemberReqDTO.JoinDTO request
     ){

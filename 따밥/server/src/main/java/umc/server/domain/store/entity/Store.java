@@ -44,4 +44,8 @@ public class Store {
     // StoreAddress의 store 필드와 매핑
     @OneToOne(mappedBy = "store", fetch = FetchType.LAZY)
     private StoreAddress storeAddress;
+
+    public void changeStoreAddress(StoreAddress storeAddress) {
+        this.storeAddress = storeAddress;
+    }
 }
