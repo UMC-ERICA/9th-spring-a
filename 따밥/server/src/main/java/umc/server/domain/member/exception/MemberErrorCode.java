@@ -7,13 +7,20 @@ import umc.server.global.apiPayload.code.BaseErrorCode;
 @Getter
 @AllArgsConstructor
 public enum MemberErrorCode implements BaseErrorCode {
-    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST,
-            "MEMBER400_1",
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND,
+            "MEMBER404_1",
             "사용자가 없습니다."),
     NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST,
             "MEMBER400_2",
-            "닉네임은 필수입니다.")
+            "닉네임은 필수입니다."),
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT,
+            "MEMBER409_1",
+            "이미 사용중인 이메일입니다."),
+    DUPLICATE_PHONE_NUMBER(HttpStatus.CONFLICT,
+            "MEMBER409_2",
+            "이미 사용중인 전화번호입니다."),
     ;
+
 
     private final HttpStatus status;
     private final String code;
