@@ -1,20 +1,30 @@
 package umc.server.domain.member.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.req.MemberReqDTO;
+import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.exception.MemberErrorCode;
 import umc.server.domain.member.exception.MemberException;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.mission.repository.MemberMissionRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
-    public MemberServiceImpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository, MemberMissionRepository memberMissionRepository) {
+
         this.memberRepository = memberRepository;
+        this.memberMissionRepository = memberMissionRepository;
     }
 
     @Override
@@ -38,6 +48,60 @@ public class MemberServiceImpl implements MemberService{
                 .build();
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public MemberResDTO.HomeTopDTO getHomeTop(Long memberId, String region, Long cursor, int size) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        Integer totalMissionCount = memberMissionRepository
+                .countInProgressMissions(memberId, false);
+
+        Pageable pageable = PageRequest.of(0, size + 1);
+        List<MemberMission> missions;
+
+        if (cursor == null){
+            cursor = 0L;
+            missions = memberMissionRepository
+                    .findInProgressMissionsFirstPage(memberId, false, pageable);
+        } else {
+            missions = memberMissionRepository
+                    .findInProgressMissionsWithCursor(memberId, false, cursor, pageable);
+        }
+
+        boolean hasNext = missions.size() > size;
+
+        if (hasNext)
+            missions = missions.subList(0, size);
+
+        Long nextCursor = missions.isEmpty() ? null : missions.get(missions.size() - 1).getId();
+
+        return MemberConverter.toHomeTopDTO(
+                member,
+                region,
+                totalMissionCount,
+                missions,
+                nextCursor,
+                hasNext
+        );
+
+    }
+
+    @Override
+    public void missionSuccess(Long memberId, Long missionId) {
+        MemberMission mm = memberMissionRepository.findByMemberIdAndMissionId(memberId, missionId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_MISSION_NOT_FOUND));
+
+        mm.changeIsCompleted(true);
+    }
+
+    @Override
+    public MemberResDTO.MyPageDTO getMyPage(Long memberId) {
+        Member member = memberRepository.findMemberById(memberId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        return MemberConverter.toMyPageDTO(member);
     }
 
     private void validateRequest(MemberReqDTO.JoinDTO request) {
