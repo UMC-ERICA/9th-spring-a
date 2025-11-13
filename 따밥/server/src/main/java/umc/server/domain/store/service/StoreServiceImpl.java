@@ -7,6 +7,8 @@ import umc.server.domain.member.repository.FoodRepository;
 import umc.server.domain.store.dto.req.StoreReqDTO;
 import umc.server.domain.store.entity.Store;
 import umc.server.domain.store.entity.StoreAddress;
+import umc.server.domain.store.exception.StoreErrorCode;
+import umc.server.domain.store.exception.StoreException;
 import umc.server.domain.store.repository.StoreRepository;
 
 import java.util.Optional;
@@ -40,8 +42,16 @@ public class StoreServiceImpl implements StoreService {
                 .longtitude(requestAddress.getLongitude())
                 .build();
 
-        store.changeStoreAddress(storeAddress);
+        store.updateStoreAddress(storeAddress);
 
         storeRepository.save(store);
+    }
+
+    @Override
+    public void updateScore(Long storeId, Double score) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+
+        store.updateScore(score);
     }
 }

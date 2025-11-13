@@ -44,4 +44,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQue
             "AND r.score >= :score AND r.score < :score + 1 " +
             "ORDER BY r.createdAt DESC")
     List<Review> findByAddrAndScore(@Param("addr") String addr, @Param("score") int score);
+
+    // 특정한 store에 별점을 남긴 사람들의 평균
+    @Query("SELECT AVG (r.score) FROM Review r WHERE r.store.id = :storeId")
+    Double findAvgByStoreId(@Param("storeId") Long storeId);
 }
