@@ -2,6 +2,7 @@ package umc.server.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.service.MemberService;
 import umc.server.domain.mission.entity.mapping.MemberMission;
@@ -17,11 +18,9 @@ public class MemberController {
     @GetMapping("/{memberId}/info")
     public ApiResponse<MemberResDTO.HomeTopDTO> getHomeTop(
             @PathVariable Long memberId,
-            @RequestParam String region,
-            @RequestParam(required = false) Long cursor,
-            @RequestParam(defaultValue = "10") int size
+            @ModelAttribute MemberReqDTO.HomeDTO homeDTO
     ){
-        MemberResDTO.HomeTopDTO response = memberService.getHomeTop(memberId, region, cursor, size);
+        MemberResDTO.HomeTopDTO response = memberService.getHomeTop(memberId, homeDTO.getRegion(), homeDTO.getCursor(), homeDTO.getSize());
         GeneralSuccessCode code = GeneralSuccessCode._OK;
 
         return ApiResponse.success(code, response);

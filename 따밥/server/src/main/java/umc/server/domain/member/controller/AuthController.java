@@ -22,7 +22,7 @@ public class AuthController {
     public ApiResponse<MemberResDTO.LoginDTO> login(
             @RequestParam Long memberId
     ){
-        Optional<Member> member = memberService.findByUsername(memberId);
+        Member member = memberService.findByUsername(memberId);
         GeneralSuccessCode code = GeneralSuccessCode._OK;
         return ApiResponse.success(
                 code, MemberConverter.toLoginDTO(member)

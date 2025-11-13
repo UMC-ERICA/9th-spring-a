@@ -17,4 +17,17 @@ public class MemberReqDTO {
         private LocalDate birthday;
         private String memberPhoto;
     }
+
+    @Getter
+    public static class HomeDTO{
+        private String region;
+        private Long cursor;
+        private Integer size;
+
+        public HomeDTO(String region, Long cursor, Integer size) {
+            this.region = region;
+            this.cursor = cursor == null ? 0L : cursor;
+            this.size = size == null ? 10 : size;
+        }
+    }
 }

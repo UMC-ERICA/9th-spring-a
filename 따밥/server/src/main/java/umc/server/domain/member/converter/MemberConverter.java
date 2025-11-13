@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 public class MemberConverter {
     // Optional<Member> 객체 -> LoginDTO
-    public static MemberResDTO.LoginDTO toLoginDTO(Optional<Member> member){
+    public static MemberResDTO.LoginDTO toLoginDTO(Member member){
         return MemberResDTO.LoginDTO.builder()
-                .memberId(member.get().getId())
-                .memberNickname(member.get().getNickname())
+                .memberId(member.getId())
+                .memberNickname(member.getNickname())
                 .build();
     }
 

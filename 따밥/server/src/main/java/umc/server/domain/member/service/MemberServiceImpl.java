@@ -1,5 +1,6 @@
 package umc.server.domain.member.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,22 +20,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final MemberMissionRepository memberMissionRepository;
     private final ReviewRepository reviewRepository;
-    public MemberServiceImpl(MemberRepository memberRepository, MemberMissionRepository memberMissionRepository, ReviewRepository reviewRepository) {
-
-        this.memberRepository = memberRepository;
-        this.memberMissionRepository = memberMissionRepository;
-        this.reviewRepository = reviewRepository;
-    }
 
     @Override
-    public Optional<Member> findByUsername(Long memberId) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        if (member.isEmpty()) throw new MemberException(MemberErrorCode.MEMBER_NOT_FOUND);
-        return member;
+    public Member findByUsername(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
     }
 
     @Override
@@ -55,8 +50,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResDTO.HomeTopDTO getHomeTop(Long memberId, String region, Long cursor, int size) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        Member member = findByUsername(memberId);
 
         Integer totalMissionCount = memberMissionRepository
                 .countInProgressMissions(memberId, false);
@@ -101,16 +95,14 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResDTO.MyPageDTO getMyPage(Long memberId) {
-        Member member = memberRepository.findMemberById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        Member member =  findByUsername(memberId);
 
         return MemberConverter.toMyPageDTO(member);
     }
 
     @Override
     public MemberResDTO.MyReviewsDTO getMyReviews(Long memberId) {
-        Member member = memberRepository.findMemberById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        Member member = findByUsername(memberId);
 
 
         List<Review> reviews = reviewRepository.findAllByMemberId(memberId);
