@@ -22,7 +22,7 @@ public class Member extends BaseEntity {
     private Long id;
 
     @Column(name = "name", length = 20, nullable = false)
-    private String nicknname;
+    private String nickname;
 
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)

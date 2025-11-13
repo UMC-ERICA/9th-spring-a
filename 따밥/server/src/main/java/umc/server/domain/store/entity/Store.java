@@ -4,7 +4,6 @@ import umc.server.domain.member.entity.Food;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 @Entity
@@ -23,7 +22,7 @@ public class Store {
 
     @Column(name = "score", nullable = false)
     @Builder.Default
-    private Float score = 0F;
+    private Double score = 0D;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
@@ -44,4 +43,12 @@ public class Store {
     // StoreAddress의 store 필드와 매핑
     @OneToOne(mappedBy = "store", fetch = FetchType.LAZY)
     private StoreAddress storeAddress;
+
+    public void updateStoreAddress(StoreAddress storeAddress) {
+        this.storeAddress = storeAddress;
+    }
+
+    public void updateScore(Double score) {
+        this.score = score;
+    }
 }

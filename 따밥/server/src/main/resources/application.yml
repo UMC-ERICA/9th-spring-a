@@ -17,3 +17,7 @@ spring:
     properties:
       hibernate:
         format_sql: true #  SQL 쿼리 예쁘게
+
+discord:
+  webhook:
+    url: ${WEBHOOK_URL}
