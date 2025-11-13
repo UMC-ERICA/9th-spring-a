@@ -16,7 +16,6 @@ import umc.server.domain.store.exception.StoreException;
 import umc.server.domain.store.repository.StoreRepository;
 import umc.server.domain.store.service.StoreService;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

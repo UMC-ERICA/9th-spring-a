@@ -9,6 +9,7 @@ import umc.server.domain.test.converter.TestConverter;
 import umc.server.domain.test.dto.res.TestResDTO;
 import umc.server.domain.test.service.query.TestQueryService;
 import umc.server.global.apiPayload.ApiResponse;
+import umc.server.global.apiPayload.code.GeneralErrorCode;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
 
 @RestController
@@ -36,5 +37,14 @@ public class TestController {
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode._OK;
         return ApiResponse.success(code, TestConverter.toExceptionDTO("This is a Test"));
+    }
+
+    // 500 예외 발생 엔드포인트
+    @GetMapping("/webhook")
+    public ApiResponse<Void> webhook(){
+        testQueryService.error();
+
+        GeneralSuccessCode code = GeneralSuccessCode._OK;
+        return ApiResponse.success(code, null);
     }
 }
