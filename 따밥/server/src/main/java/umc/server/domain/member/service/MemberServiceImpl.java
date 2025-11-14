@@ -4,27 +4,42 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
+import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.entity.MemberAddress;
+import umc.server.domain.member.entity.mapping.MemberFood;
+import umc.server.domain.member.exception.FoodErrorCode;
+import umc.server.domain.member.exception.FoodException;
 import umc.server.domain.member.exception.MemberErrorCode;
 import umc.server.domain.member.exception.MemberException;
+import umc.server.domain.member.repository.FoodRepository;
+import umc.server.domain.member.repository.MemberAddressRepository;
+import umc.server.domain.member.repository.MemberFoodRepository;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
+    private final MemberAddressRepository memberAddressRepository;
     private final MemberMissionRepository memberMissionRepository;
     private final ReviewRepository reviewRepository;
+    private final FoodRepository foodRepository;
+    private final MemberFoodRepository memberFoodRepository;
 
     @Override
     public Member findByUsername(Long memberId) {
@@ -33,19 +48,33 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void join(MemberReqDTO.JoinDTO request) {
+    public MemberResDTO.JoinDTO join(MemberReqDTO.JoinDTO request) {
         validateRequest(request);
 
-        Member member = Member.builder()
-                .email(request.getEmail())
-                .nickname(request.getName())
-                .gender(request.getGender())
-                .birth(request.getBirthday())
-                .photo(request.getMemberPhoto())
-                .phoneNumber(request.getPhoneNumber())
-                .build();
-
+        Member member = MemberConverter.toMember(request);
         memberRepository.save(member);
+
+        // 주소 저장
+        MemberAddress memberAddress = MemberConverter.toMemberAddress(member, request);
+        memberAddressRepository.save(memberAddress);
+
+        // 좋아하는 음식 저장
+        if (request.preferFood().size() > 1){
+            List<MemberFood> memberFood = request.preferFood().stream()
+                    .map(id -> MemberFood.builder()
+                            .member(member)
+                            .food(foodRepository.findById(id)
+                                    .orElseThrow(
+                                            () -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND)))
+                            .build()
+                    )
+                    .toList();
+
+            // 모든 선호 음식 추가
+            memberFoodRepository.saveAll(memberFood);
+        }
+
+        return MemberConverter.toJoinDTO(member);
     }
 
     @Override
@@ -111,11 +140,11 @@ public class MemberServiceImpl implements MemberService{
     }
 
     private void validateRequest(MemberReqDTO.JoinDTO request) {
-        if (request.getName() == null)
+        if (request.name() == null)
             throw new MemberException(MemberErrorCode.NICKNAME_NOT_EXIST);
-        if (memberRepository.existsByPhoneNumber(request.getPhoneNumber()))
+        if (memberRepository.existsByPhoneNumber(request.phoneNumber()))
             throw new MemberException(MemberErrorCode.DUPLICATE_PHONE_NUMBER);
-        if (memberRepository.existsByEmail(request.getEmail()))
+        if (memberRepository.existsByEmail(request.email()))
             throw new MemberException(MemberErrorCode.DUPLICATE_EMAIL);
     }
 

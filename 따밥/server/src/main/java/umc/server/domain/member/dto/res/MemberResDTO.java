@@ -6,9 +6,16 @@ import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.review.dto.res.ReviewResDTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MemberResDTO {
+    @Builder
+    public record JoinDTO(
+            Long memberId,
+            LocalDateTime createdAt
+    ){}
+
     @Getter
     @Builder
     public static class LoginDTO{
