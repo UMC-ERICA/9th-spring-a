@@ -26,6 +26,6 @@ public class Term {
     @Enumerated(EnumType.STRING)
     private Context context;
 
-    @OneToMany(mappedBy = "Term")
+    @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
     private List<MemberTerm> memberTerms= new ArrayList<>();
 }

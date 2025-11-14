@@ -7,7 +7,7 @@ import umc.server.domain.member.entity.Term;
 import umc.server.domain.review.entity.Review;
 import java.util.List;
 
-@Repository
+
 public interface ReviewRepository extends JpaRepository<Review, Long>{
-    List<Review> findByStoreId(Long StoreId);
+
 }

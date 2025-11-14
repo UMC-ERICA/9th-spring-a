@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
     @Query("select mm from MemberMission mm "+
             "JOIN Fetch mm.member m "+

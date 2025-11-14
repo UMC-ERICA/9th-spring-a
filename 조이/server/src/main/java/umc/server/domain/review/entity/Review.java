@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.store.entity.Store;
 import umc.server.global.BaseEntity;
 
 import java.util.Date;
@@ -14,17 +15,16 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "Review")
-
 public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "star",nullable = false,length = 5)
-    private Float star;
+    @Column(nullable = false)
+    private Double star;
 
-    @Column(name = "reviewcontext",nullable = false)
+    @Column(nullable = false)
     private String reviewContext;
 
     @Column(name = "date",nullable = false)
@@ -38,6 +38,10 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // FK
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id") // FK
+    private Store store;
 
 
 
