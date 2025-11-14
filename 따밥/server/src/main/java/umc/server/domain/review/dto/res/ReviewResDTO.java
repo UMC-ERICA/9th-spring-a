@@ -15,4 +15,10 @@ public class ReviewResDTO {
         private String description;
         private LocalDateTime createdAt;
     }
+
+    @Builder
+    public record reviewScoreDTO(
+            Long reviewId,
+            Double Score
+    ){}
 }
