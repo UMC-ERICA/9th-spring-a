@@ -44,10 +44,6 @@ public class Store {
     @OneToOne(mappedBy = "store", fetch = FetchType.LAZY)
     private StoreAddress storeAddress;
 
-    public void updateStoreAddress(StoreAddress storeAddress) {
-        this.storeAddress = storeAddress;
-    }
-
     public void updateScore(Double score) {
         this.score = score;
     }

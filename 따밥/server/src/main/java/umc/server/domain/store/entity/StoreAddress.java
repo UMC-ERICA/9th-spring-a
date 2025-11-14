@@ -37,7 +37,9 @@ public class StoreAddress {
     @Column(name = "longtitude", nullable = false)
     private Double longtitude;
 
-
+    public void updateStore(Store store) {
+        this.store = store;
+    }
 
     public void updateAddress(String addr1, String addr2, String addr3, String addr4,  Double latitude, Double longtitude) {
         this.addr1 = addr1;
