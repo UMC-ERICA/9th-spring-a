@@ -105,4 +105,19 @@ public class MemberConverter {
                 .storeName(m.getStore().getStoreName())
                 .build();
     }
+
+    public static MemberMission toMemberMission(Member member, Mission mission){
+        return MemberMission.builder()
+                .member(member)
+                .mission(mission)
+                .build();
+    }
+
+    public static MemberResDTO.ChallengeMissionDTO toChallengeMissionDTO(MemberMission mm){
+        return MemberResDTO.ChallengeMissionDTO.builder()
+                .memberId(mm.getMember().getId())
+                .missionId(mm.getMission().getId())
+                .deadLine(mm.getMission().getDeadline())
+                .build();
+    }
 }

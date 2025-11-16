@@ -16,6 +16,13 @@ public class MemberResDTO {
             LocalDateTime createdAt
     ){}
 
+    @Builder
+    public record ChallengeMissionDTO(
+            Long memberId,
+            Long missionId,
+            LocalDate deadLine
+    ){}
+
     @Getter
     @Builder
     public static class LoginDTO{

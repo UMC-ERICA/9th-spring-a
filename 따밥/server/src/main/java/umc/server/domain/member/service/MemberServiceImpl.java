@@ -20,8 +20,12 @@ import umc.server.domain.member.repository.FoodRepository;
 import umc.server.domain.member.repository.MemberAddressRepository;
 import umc.server.domain.member.repository.MemberFoodRepository;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.mission.exception.MissionErrorCode;
+import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MemberMissionRepository;
+import umc.server.domain.mission.repository.MissionRepository;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
 
@@ -40,6 +44,7 @@ public class MemberServiceImpl implements MemberService{
     private final ReviewRepository reviewRepository;
     private final FoodRepository foodRepository;
     private final MemberFoodRepository memberFoodRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     public Member findByUsername(Long memberId) {
@@ -129,6 +134,8 @@ public class MemberServiceImpl implements MemberService{
         return MemberConverter.toMyPageDTO(member);
     }
 
+
+
     @Override
     public MemberResDTO.MyReviewsDTO getMyReviews(Long memberId) {
         Member member = findByUsername(memberId);
@@ -137,6 +144,19 @@ public class MemberServiceImpl implements MemberService{
         List<Review> reviews = reviewRepository.findAllByMemberId(memberId);
 
         return MemberConverter.toMyReviewsDTO(member, reviews);
+    }
+
+    @Override
+    public MemberResDTO.ChallengeMissionDTO challengeMission(Long memberId, Long missionId) {
+        Member member = findByUsername(memberId);
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new MissionException(MissionErrorCode.MISSION_NOT_FOUND));
+
+        MemberMission memberMission = MemberConverter.toMemberMission(member, mission);
+
+        memberMissionRepository.save(memberMission);
+
+        return MemberConverter.toChallengeMissionDTO(memberMission);
     }
 
     private void validateRequest(MemberReqDTO.JoinDTO request) {

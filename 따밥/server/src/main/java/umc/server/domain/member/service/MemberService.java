@@ -13,4 +13,5 @@ public interface MemberService {
     void missionSuccess(Long memberId, Long missionId);
     MemberResDTO.MyPageDTO getMyPage(Long memberId);
     MemberResDTO.MyReviewsDTO getMyReviews(Long memberId);
+    MemberResDTO.ChallengeMissionDTO challengeMission(Long memberId, Long missionId);
 }
