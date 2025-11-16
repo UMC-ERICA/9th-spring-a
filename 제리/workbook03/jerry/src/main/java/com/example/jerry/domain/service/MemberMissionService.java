@@ -2,6 +2,7 @@ package com.example.jerry.domain.service;
 
 
 import com.example.jerry.domain.dto.response.MemberMissionResDto;
+import com.example.jerry.domain.dto.request.MissionChallengeReqDto;
 import com.example.jerry.domain.entity.Member;
 import com.example.jerry.domain.entity.MemberMission;
 import com.example.jerry.domain.entity.Mission;
@@ -22,6 +23,35 @@ public class MemberMissionService {
     private final MemberMissionRepository memberMissionRepository;
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
+
+    //  미션 도전하기
+    public MemberMissionResDto challengeMission(MissionChallengeReqDto req) {
+
+        // 회원 조회
+        Member member = memberRepository.findById(req.getMemberId())
+                .orElseThrow(() -> new TestException(MemberMissionErrorCode.MEMBER_NOT_FOUND));
+
+        // 미션 조회
+        Mission mission = missionRepository.findById(req.getMissionId())
+                .orElseThrow(() -> new TestException(MemberMissionErrorCode.MISSION_NOT_FOUND));
+
+        // 중복 도전 방지
+        memberMissionRepository.findByMember_MemberIdAndMission_MissionId(req.getMemberId(), req.getMissionId())
+                .ifPresent(mm -> {
+                    throw new TestException(MemberMissionErrorCode.ALREADY_COMPLETED);
+                });
+
+        // 새 도전 생성
+        MemberMission memberMission = new MemberMission(
+                false,   // clear = false
+                member,
+                mission
+        );
+
+        memberMissionRepository.save(memberMission);
+
+        return MemberMissionResDto.from(memberMission);
+    }
 
     // 미완료 미션 조회
     public Page<MemberMissionResDto> getMissionsByStatus(Long memberId, String status, Pageable pageable) {
