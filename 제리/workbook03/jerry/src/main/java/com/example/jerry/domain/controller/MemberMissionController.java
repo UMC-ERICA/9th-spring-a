@@ -15,32 +15,28 @@ public class MemberMissionController {
 
     private final MemberMissionService memberMissionService;
 
-    // 진행 중
-    @GetMapping("/{memberId}/uncleared")
-    public ApiResponse<?> getUncleared(
+    /**
+     * 진행중/완료된 미션 조회 - 통합 API
+     * /member-missions/{memberId}?status=uncleared
+     * /member-missions/{memberId}?status=cleared
+     */
+    @GetMapping("/{memberId}")
+    public ApiResponse<?> getMemberMissions(
             @PathVariable Long memberId,
+            @RequestParam(defaultValue = "uncleared") String status,
             Pageable pageable
     ) {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
-                memberMissionService.getUnclearedMissions(memberId, pageable)
+                memberMissionService.getMissionsByStatus(memberId, status, pageable)
         );
     }
 
-    // 완료된 미션
-    @GetMapping("/{memberId}/cleared")
-    public ApiResponse<?> getCleared(
-            @PathVariable Long memberId,
-            Pageable pageable
-    ) {
-        return ApiResponse.onSuccess(
-                GeneralSuccessCode.OK,
-                memberMissionService.getClearedMissions(memberId, pageable)
-        );
-    }
-
-    // 미션 완료 처리
-    @PostMapping("/{memberId}/missions/{missionId}/clear")
+    /**
+     * 미션 완료 처리
+     * PATCH 사용 권장
+     */
+    @PatchMapping("/{memberId}/missions/{missionId}/clear")
     public ApiResponse<MemberMissionResDto> clearMission(
             @PathVariable Long memberId,
             @PathVariable Long missionId
