@@ -39,7 +39,7 @@ public class Member {
     private Long points = 0L;
 
     // 추가 생성자 (빌더를 사용하지 않는 경우)
-    public User(String email, String password, String name, String phone) {
+    public Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;

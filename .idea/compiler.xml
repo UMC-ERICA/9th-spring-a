@@ -10,6 +10,11 @@
         <module name="와나.server.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="server" target="17" />
+      <module name="server.main" target="17" />
+      <module name="server.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

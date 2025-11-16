@@ -17,15 +17,15 @@ public class MemberPreference {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private User user;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Food category;
 
     // 생성자
-    public MemberPreference(User member, Food category) {
-        this.user = member;
+    public MemberPreference(Member member, Food category) {
+        this.member = member;
         this.category = category;
     }
 }
