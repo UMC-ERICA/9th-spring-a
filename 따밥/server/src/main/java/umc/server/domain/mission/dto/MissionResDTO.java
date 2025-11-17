@@ -15,4 +15,10 @@ public class MissionResDTO {
         private LocalDate deadLine;
         private String storeName;
     }
+
+    @Builder
+    public record RegisterDTO(
+            Long storeId,
+            LocalDate deadLine
+    ){}
 }

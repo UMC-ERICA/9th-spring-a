@@ -1,4 +1,4 @@
-package umc.server.domain.test;
+package umc.server.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,49 +2,43 @@ package umc.server.domain.store.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Food;
+import umc.server.domain.member.exception.FoodErrorCode;
+import umc.server.domain.member.exception.FoodException;
 import umc.server.domain.member.repository.FoodRepository;
+import umc.server.domain.store.converter.StoreConverter;
 import umc.server.domain.store.dto.req.StoreReqDTO;
+import umc.server.domain.store.dto.res.StoreResDTO;
 import umc.server.domain.store.entity.Store;
 import umc.server.domain.store.entity.StoreAddress;
 import umc.server.domain.store.exception.StoreErrorCode;
 import umc.server.domain.store.exception.StoreException;
+import umc.server.domain.store.repository.StoreAddressRepository;
 import umc.server.domain.store.repository.StoreRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
     private final FoodRepository foodRepository;
+    private final StoreAddressRepository storeAddressRepository;
 
     @Override
-    public void register(StoreReqDTO.RegisterDTO request) {
-        Optional<Food> food = foodRepository.findById(request.getFoodId());
+    public StoreResDTO.RegisterDTO register(StoreReqDTO.RegisterDTO request) {
+        Food food = foodRepository.findById(request.foodId())
+                .orElseThrow(() -> new FoodException(FoodErrorCode.FOOD_NOT_FOUND));
 
-        Store store = Store.builder()
-                .storeName(request.getStoreName())
-                .food(food.get())
-                .openingTime(request.getOpeningTime())
-                .closingTime(request.getClosingTime())
-                .breakStartTime(request.getBreakStartTime())
-                .breakEndTime(request.getBreakEndTime())
-                .build();
-
-        StoreReqDTO.StoreAddress requestAddress = request.getAddress();
-        StoreAddress storeAddress = StoreAddress.builder()
-                .addr1(requestAddress.getAddr1())
-                .addr2(requestAddress.getAddr2())
-                .addr3(requestAddress.getAddr3())
-                .addr4(requestAddress.getAddr4())
-                .latitude(requestAddress.getLatitude())
-                .longtitude(requestAddress.getLongitude())
-                .build();
-
-        store.updateStoreAddress(storeAddress);
+        Store store = StoreConverter.toStore(request, food);
+        StoreAddress storeAddress = StoreConverter.toStoreAddress(request);
 
         storeRepository.save(store);
+
+        storeAddress.updateStore(store);
+        storeAddressRepository.save(storeAddress);
+
+        return StoreConverter.toRegisterDTO(store);
     }
 
     @Override
