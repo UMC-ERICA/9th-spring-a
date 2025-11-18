@@ -1,11 +1,13 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.converter.MemberConverter;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.exception.MemberSuccessCode;
 import umc.server.domain.member.service.MemberService;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
@@ -30,14 +32,11 @@ public class AuthController {
     }
 
     @PostMapping("/users")
-    public ApiResponse<Void> join(
-            @RequestBody MemberReqDTO.JoinDTO request
+    public ApiResponse<MemberResDTO.JoinDTO> join(
+            @RequestBody @Valid MemberReqDTO.JoinDTO request
     ){
-        memberService.join(request);
-        GeneralSuccessCode code = GeneralSuccessCode._CREATED;
-
         return ApiResponse.success(
-                code, null
+                MemberSuccessCode.MEMBER_FOUND, memberService.join(request)
         );
     }
 

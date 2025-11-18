@@ -26,6 +26,17 @@ public class MemberController {
         return ApiResponse.success(code, response);
     }
 
+    @PostMapping("/{memberId}/missions/{missionId}/challenge")
+    public ApiResponse<MemberResDTO.ChallengeMissionDTO> challengeMission(
+            @PathVariable Long memberId,
+            @PathVariable Long missionId
+    ){
+        return ApiResponse.success(
+                GeneralSuccessCode._OK,
+                memberService.challengeMission(memberId, missionId)
+        );
+    }
+
     @PostMapping("/{memberId}/missions/{missionId}")
     public ApiResponse<Void> missionSuccess(
             @PathVariable Long memberId,
