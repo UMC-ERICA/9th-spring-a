@@ -38,14 +38,14 @@ public class Mission {
     @Column(name = "finishscore", nullable = false)
     private Integer finishscore;
 
-    @OneToMany(mappedBy = "Mission" )
+    @OneToMany(mappedBy = "mission" , cascade = CascadeType.ALL)
     private List<MemberMission> membermission= new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Review_id") // FK
-    private Review review ;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id") // FK
+    private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Store_id") // FK
-    private Store store ;
+    @JoinColumn(name = "store_id") // FK
+    private Store store;
 }

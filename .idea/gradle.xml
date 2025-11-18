@@ -11,6 +11,33 @@
           </set>
         </option>
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/와나/server" />
+        <option name="gradleJvm" value="openjdk-24" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/와나/server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/제리/server" />
+        <option name="gradleJvm" value="openjdk-24" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/제리/server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/조이/server" />
+        <option name="gradleJvm" value="openjdk-24" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/조이/server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
     </option>
   </component>
 </project>
