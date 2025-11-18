@@ -1,22 +1,36 @@
 package com.example.jerry.domain.service;
 
+import java.util.List;
+import java.util.ArrayList;
+import com.example.jerry.domain.entity.Food;
 import com.example.jerry.domain.entity.Member;
-import com.example.jerry.domain.dto.request.MemberReqDto;
+import com.example.jerry.domain.entity.MemberPreference;
+import com.example.jerry.domain.dto.request.MemberLoginReqDto;
+import com.example.jerry.domain.dto.request.MemberSignupReqDto ;
 import com.example.jerry.domain.dto.response.MemberResDto;
 import com.example.jerry.domain.exception.code.MemberErrorCode;
+import com.example.jerry.domain.exception.code.FoodErrorCode;
 import com.example.jerry.domain.exception.TestException;
+import com.example.jerry.domain.repository.FoodRepository;
 import com.example.jerry.domain.repository.MemberRepository;
+import com.example.jerry.domain.repository.MemberPreferenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
+
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final FoodRepository foodRepository;
+    private final MemberPreferenceRepository memberPreferenceRepository;
 
     // 회원가입
-    public MemberResDto signup(MemberReqDto req) {
+
+    public MemberResDto signup(MemberSignupReqDto req) {
 
         if (memberRepository.findByEmail(req.getEmail()).isPresent()) {
             throw new TestException(MemberErrorCode.DUPLICATE_EMAIL);
@@ -26,6 +40,7 @@ public class MemberService {
             throw new TestException(MemberErrorCode.DUPLICATE_PHONE);
         }
 
+        // Member 생성 및 저장
         Member member = Member.builder()
                 .email(req.getEmail())
                 .password(req.getPassword())
@@ -35,11 +50,33 @@ public class MemberService {
 
         memberRepository.save(member);
 
+        // 선호 음식 저장
+        if (req.getPreferCategory() != null && !req.getPreferCategory().isEmpty()) {
+
+            List<MemberPreference> preferences = new ArrayList<>();
+
+            for (Integer categoryId : req.getPreferCategory()) {
+
+                // Food 존재 여부 검증
+                Food food = foodRepository.findById(categoryId)
+                        .orElseThrow(() -> new TestException(FoodErrorCode.FOOD_NOT_FOUND));
+
+                // MemberPreference 생성
+                MemberPreference preference = new MemberPreference(member, food);
+
+                preferences.add(preference);
+            }
+
+            // 저장
+            memberPreferenceRepository.saveAll(preferences);
+        }
+
         return MemberResDto.from(member);
     }
 
+
     // 로그인
-    public MemberResDto login(MemberReqDto req) {
+    public MemberResDto login(MemberLoginReqDto req) {
 
         Member member = memberRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new TestException(MemberErrorCode.INVALID_LOGIN));

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
     // 진행 중 (clear = false)
-    Page<MemberMission> findByMemberIdAndClearFalse(Long memberId, Pageable pageable);
+    Page<MemberMission> findByMember_MemberIdAndClearTrue(Long memberId, Pageable pageable);
 
     // 완료 (clear = true)
-    Page<MemberMission> findByMemberIdAndClearTrue(Long memberId, Pageable pageable);
+    Page<MemberMission> findByMember_MemberIdAndClearFalse(Long memberId, Pageable pageable);
 
-    Optional<MemberMission> findByMemberIdAndMissionId(Long memberId, Long missionId);
+    Optional<MemberMission> findByMember_MemberIdAndMission_MissionId(Long memberId, Long missionId);
 }

@@ -21,7 +21,7 @@ public class RestaurantResDto {
                 .name(restaurant.getName())
                 .openTime(restaurant.getOpenTime() != null ? restaurant.getOpenTime().toString() : null)
                 .closeTime(restaurant.getCloseTime() != null ? restaurant.getCloseTime().toString() : null)
-                .categoryName(restaurant.getCategory().getName())
+                .categoryName(restaurant.getCategory().getCategory().name())
                 .address(restaurant.getAddress().getAddress())
                 .build();
     }

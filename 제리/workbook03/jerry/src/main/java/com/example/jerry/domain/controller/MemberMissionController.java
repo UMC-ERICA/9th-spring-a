@@ -1,5 +1,6 @@
 package com.example.jerry.domain.controller;
 
+import com.example.jerry.domain.dto.request.MissionChallengeReqDto;
 import com.example.jerry.domain.dto.response.MemberMissionResDto;
 import com.example.jerry.domain.service.MemberMissionService;
 import com.example.jerry.global.apiPayload.ApiResponse;
@@ -15,32 +16,38 @@ public class MemberMissionController {
 
     private final MemberMissionService memberMissionService;
 
-    // 진행 중
-    @GetMapping("/{memberId}/uncleared")
-    public ApiResponse<?> getUncleared(
+    /**
+     * 진행중/완료된 미션 조회 7주차 피드백 수정
+     * /member-missions/{memberId}?status=uncleared
+     * /member-missions/{memberId}?status=cleared
+     */
+    @GetMapping("/{memberId}")
+    public ApiResponse<?> getMemberMissions(
             @PathVariable Long memberId,
+            @RequestParam(defaultValue = "uncleared") String status,
             Pageable pageable
     ) {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
-                memberMissionService.getUnclearedMissions(memberId, pageable)
+                memberMissionService.getMissionsByStatus(memberId, status, pageable)
         );
     }
 
-    // 완료된 미션
-    @GetMapping("/{memberId}/cleared")
-    public ApiResponse<?> getCleared(
-            @PathVariable Long memberId,
-            Pageable pageable
+    @PostMapping("/challenge")
+    public ApiResponse<MemberMissionResDto> challengeMission(
+            @RequestBody MissionChallengeReqDto req
     ) {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
-                memberMissionService.getClearedMissions(memberId, pageable)
+                memberMissionService.challengeMission(req)
         );
     }
 
-    // 미션 완료 처리
-    @PostMapping("/{memberId}/missions/{missionId}/clear")
+    /**
+     * 미션 완료 처리
+     * 7주차 피드백대로 PATCH로 수정!
+     */
+    @PatchMapping("/{memberId}/missions/{missionId}/clear")
     public ApiResponse<MemberMissionResDto> clearMission(
             @PathVariable Long memberId,
             @PathVariable Long missionId

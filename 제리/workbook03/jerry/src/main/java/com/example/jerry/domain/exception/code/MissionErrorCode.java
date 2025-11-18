@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum MissionErrorCode implements BaseErrorCode {
 
     MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404_1", "해당 미션을 찾을 수 없습니다."),
+    INVALID_RESTAURANT(HttpStatus.NOT_FOUND, "MISSION404_2", "존재하지 않는 가게입니다."),
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404_2", "해당 지역에 미션이 존재하지 않습니다."),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "MISSION400_1", "잘못된 미션 요청입니다.");
 

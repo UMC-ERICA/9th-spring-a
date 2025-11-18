@@ -1,6 +1,7 @@
 package com.example.jerry.domain.controller;
 
-import com.example.jerry.domain.dto.request.MemberReqDto;
+import com.example.jerry.domain.dto.request.MemberSignupReqDto;
+import com.example.jerry.domain.dto.request.MemberLoginReqDto;
 import com.example.jerry.domain.dto.response.MemberResDto;
 import com.example.jerry.domain.service.MemberService;
 import com.example.jerry.global.apiPayload.ApiResponse;
@@ -17,7 +18,7 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ApiResponse<MemberResDto> signup(@RequestBody MemberReqDto req) {
+    public ApiResponse<MemberResDto> signup(@RequestBody MemberSignupReqDto req) {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
                 memberService.signup(req)
@@ -26,7 +27,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public ApiResponse<MemberResDto> login(@RequestBody MemberReqDto req) {
+    public ApiResponse<MemberResDto> login(@RequestBody MemberLoginReqDto  req) {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
                 memberService.login(req)

@@ -1,5 +1,6 @@
 package com.example.jerry.domain.controller;
 
+import com.example.jerry.domain.dto.request.MissionCreateReqDto;
 import com.example.jerry.domain.dto.request.MissionReqDto;
 import com.example.jerry.domain.dto.response.MissionResDto;
 import com.example.jerry.domain.service.MissionService;
@@ -24,4 +25,15 @@ public class MissionController {
         List<MissionResDto> missions = missionService.getAvailableMissions(reqDto);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, missions);
     }
+
+    @PostMapping
+    public ApiResponse<MissionResDto> createMission(
+            @RequestBody MissionCreateReqDto req
+    ) {
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                missionService.createMission(req)
+        );
+    }
+
 }
