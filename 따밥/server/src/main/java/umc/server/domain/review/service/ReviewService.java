@@ -5,4 +5,5 @@ import umc.server.domain.review.dto.res.ReviewResDTO;
 
 public interface ReviewService {
     ReviewResDTO.reviewScoreDTO createReview(Long storeId, ReviewReqDTO.ReviewReq request);
+    ReviewResDTO.ReviewPreViewListDTO findStoreReview(String storeName, Integer page);
 }

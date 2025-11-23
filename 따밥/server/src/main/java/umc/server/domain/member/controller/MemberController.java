@@ -1,16 +1,21 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.service.MemberService;
 import umc.server.domain.mission.entity.mapping.MemberMission;
+import umc.server.domain.review.dto.res.ReviewResDTO;
+import umc.server.global.annotation.ProperPageSize;
 import umc.server.global.apiPayload.ApiResponse;
 import umc.server.global.apiPayload.code.GeneralSuccessCode;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/users")
 public class MemberController {
     private final MemberService memberService;
@@ -58,12 +63,16 @@ public class MemberController {
         return ApiResponse.success(code, response);
     }
 
+    // 페이징 처리로 변경
     @GetMapping("/{memberId}/reviews")
-    public ApiResponse<MemberResDTO.MyReviewsDTO> getMyReviews(
-            @PathVariable Long memberId
+    public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getMyReviews(
+            @PathVariable Long memberId,
+            @RequestParam(defaultValue = "0") @Valid @ProperPageSize Integer page
     ){
-        MemberResDTO.MyReviewsDTO response = memberService.getMyReviews(memberId);
-        GeneralSuccessCode code = GeneralSuccessCode._OK;
-        return ApiResponse.success(code, response);
+
+        return ApiResponse.success(
+                GeneralSuccessCode._OK,
+                memberService.getMyReviews(memberId, page)
+        );
     }
 }

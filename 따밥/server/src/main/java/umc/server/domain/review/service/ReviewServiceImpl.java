@@ -1,6 +1,8 @@
 package umc.server.domain.review.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.server.domain.member.entity.Member;
@@ -40,6 +42,17 @@ public class ReviewServiceImpl implements ReviewService {
         return ReviewConverter.toReviewResDTO(review.getId(),
                 updateStoreScore(storeId)
         );
+    }
+
+    @Override
+    public ReviewResDTO.ReviewPreViewListDTO findStoreReview(String storeName, Integer page) {
+        Store store = storeRepository.findByStoreName(storeName)
+                .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+
+        PageRequest pageRequest = PageRequest.of(page, 5);
+        Page<Review> result = reviewRepository.findAllByStore(store, pageRequest);
+
+        return ReviewConverter.toReviewPreViewListDTO(result);
     }
 
     private Double updateStoreScore(Long storeId) {

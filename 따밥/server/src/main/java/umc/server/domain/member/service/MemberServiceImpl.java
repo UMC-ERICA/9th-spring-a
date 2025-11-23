@@ -1,6 +1,7 @@
 package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ import umc.server.domain.mission.exception.MissionErrorCode;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.mission.repository.MissionRepository;
+import umc.server.domain.review.converter.ReviewConverter;
+import umc.server.domain.review.dto.res.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
 
@@ -137,13 +140,13 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
-    public MemberResDTO.MyReviewsDTO getMyReviews(Long memberId) {
+    public ReviewResDTO.ReviewPreViewListDTO getMyReviews(Long memberId, Integer page) {
         Member member = findByUsername(memberId);
+        PageRequest pageRequest = PageRequest.of(page, 5);
 
+        Page<Review> result = reviewRepository.findAllByMemberId(memberId, pageRequest);
 
-        List<Review> reviews = reviewRepository.findAllByMemberId(memberId);
-
-        return MemberConverter.toMyReviewsDTO(member, reviews);
+        return ReviewConverter.toReviewPreViewListDTO(result);
     }
 
     @Override

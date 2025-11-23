@@ -1,5 +1,6 @@
 package umc.server.domain.member.converter;
 
+import org.springframework.data.domain.Page;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
@@ -66,23 +67,6 @@ public class MemberConverter {
                         .collect(Collectors.toList()))
                 .nextCursor(nextCursor)
                 .hasNext(hasNext)
-                .build();
-    }
-    public static MemberResDTO.MyReviewsDTO toMyReviewsDTO(Member member, List<Review> reviews){
-        return MemberResDTO.MyReviewsDTO.builder()
-                .reviews(reviews.stream()
-                        .map(MemberConverter::toReviewInfo)
-                        .collect(Collectors.toList()))
-                .build();
-    }
-
-    private static ReviewResDTO.ReviewInfo toReviewInfo(Review review){
-        return ReviewResDTO.ReviewInfo.builder()
-                .reviewId(review.getId())
-                .storeName(review.getStore().getStoreName())
-                .score(review.getScore())
-                .description(review.getDescription())
-                .createdAt(review.getCreatedAt())
                 .build();
     }
 

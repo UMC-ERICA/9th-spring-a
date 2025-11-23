@@ -1,5 +1,6 @@
 package umc.server.global.apiPayload.handler;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,21 @@ public class GeneralExceptionAdvice {
     @Value("${discord.webhook.url}")
     private String webhookUrl;
     private final DiscordClient discordClient;
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse<Map<String, String>>> handleConstraintViolationException(ConstraintViolationException ex){
+        // 검사에 실패한 필드와 그에 대한 메시지를 저장하는 map
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(error -> {
+            errors.put(error.getPropertyPath().toString(), error.getMessage());
+        });
+        GeneralErrorCode code = GeneralErrorCode._VALID_FAIL;
+        ApiResponse<Map<String, String>> errorResponse = ApiResponse.onFailure(
+                code,
+                errors
+        );
+        return ResponseEntity.status(code.getStatus()).body(errorResponse);
+    }
 
     // 컨트롤러 메소드에서 @Valid 어노테이션을 사용하여 DTO의 유효성 검사
     @ExceptionHandler(MethodArgumentNotValidException.class)
