@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.service.MemberService;
+import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.review.dto.res.ReviewResDTO;
 import umc.server.global.annotation.ProperPageSize;
@@ -42,6 +43,18 @@ public class MemberController {
         );
     }
 
+
+    @GetMapping("/{memberId}/missions/challenge")
+    public ApiResponse<MissionResDTO.MissionPreviewList> getMyChallengeMissions(
+            @PathVariable Long memberId,
+            @RequestParam(defaultValue = "0") @ProperPageSize Integer page
+    ){
+        return ApiResponse.success(
+                GeneralSuccessCode._OK,
+                memberService.getMyMissions(memberId, page)
+        );
+    }
+
     @PostMapping("/{memberId}/missions/{missionId}")
     public ApiResponse<Void> missionSuccess(
             @PathVariable Long memberId,
@@ -62,6 +75,7 @@ public class MemberController {
         GeneralSuccessCode code = GeneralSuccessCode._OK;
         return ApiResponse.success(code, response);
     }
+
 
     // 페이징 처리로 변경
     @GetMapping("/{memberId}/reviews")

@@ -3,6 +3,7 @@ package umc.server.domain.member.service;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.review.dto.res.ReviewResDTO;
 
 import java.util.Optional;
@@ -15,4 +16,5 @@ public interface MemberService {
     MemberResDTO.MyPageDTO getMyPage(Long memberId);
     ReviewResDTO.ReviewPreViewListDTO getMyReviews(Long memberId, Integer page);
     MemberResDTO.ChallengeMissionDTO challengeMission(Long memberId, Long missionId);
+    MissionResDTO.MissionPreviewList getMyMissions(Long memberId, Integer page);
 }
