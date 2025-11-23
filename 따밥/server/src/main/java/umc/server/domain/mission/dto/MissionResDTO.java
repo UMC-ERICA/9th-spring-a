@@ -4,17 +4,27 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class MissionResDTO {
-    @Getter
     @Builder
-    public static class MissionInfo{
-        private Long missionId;
-        private String description;
-        private Double point;
-        private LocalDate deadLine;
-        private String storeName;
-    }
+    public record MissionPreviewList(
+       List<MissionInfo> missionList,
+       Integer listSize,
+       Integer totalPage,
+       Long totalElements,
+       Boolean isFirst,
+       Boolean isLast
+    ){}
+
+    @Builder
+    public record MissionInfo(
+        Long missionId,
+        String description,
+        Double point,
+        LocalDate deadLine,
+        String storeName
+    ){}
 
     @Builder
     public record RegisterDTO(

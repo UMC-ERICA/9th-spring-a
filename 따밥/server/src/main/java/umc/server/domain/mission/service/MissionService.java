@@ -5,4 +5,5 @@ import umc.server.domain.mission.dto.MissionResDTO;
 
 public interface MissionService {
     MissionResDTO.RegisterDTO register(MissionReqDTO.RegisterDTO request);
+    MissionResDTO.MissionPreviewList getStoreMissions(String storeName, Integer page);
 }
