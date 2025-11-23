@@ -6,12 +6,15 @@ import lombok.*;
 import umc.server.domain.review.entity.Review;
 import umc.server.global.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = "Store")
+@Table(name = "store")
 public class Store extends BaseEntity {
 
     @Id
@@ -24,8 +27,9 @@ public class Store extends BaseEntity {
     @Column(name = "ceosnum", length = 9, nullable = false)
     private Integer ceosnum;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Review_id") // FK
-    private Review review ;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Review> review = new ArrayList<>();
+
+
 
 }
