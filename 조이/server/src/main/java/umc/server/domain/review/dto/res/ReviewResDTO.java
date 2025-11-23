@@ -10,11 +10,13 @@ public class ReviewResDTO {
     @Builder
     @Getter
         public static class ReviewDTO {
-        private Long storeName;
+        private String storeName;
         private String memberName;
         private LocalDateTime createdAt;
-        private String content;
+        private String reviewContext;
         private String title;
-        private Double star;
+        private Float star;
+        private Long reviewId;
+
         }
 }

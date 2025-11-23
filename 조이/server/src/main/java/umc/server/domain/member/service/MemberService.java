@@ -1,9 +1,16 @@
 package umc.server.domain.member.service;
 
+import umc.server.domain.member.dto.req.MemberReqDTO;
+import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
 
 public interface MemberService {
 
-    public void createMember(Long memberId, String name, String email, String tel);
-    public Member getMember(Long memberId);
+    //회원가입
+    MemberResDTO.JoinDTO signup(
+            MemberReqDTO.JoinDTO dto
+    );
+    MemberResDTO.LoginDTO login(
+            MemberReqDTO.LoginDTO dto
+    );
 }

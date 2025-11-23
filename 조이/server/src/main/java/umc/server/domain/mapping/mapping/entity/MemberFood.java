@@ -1,4 +1,4 @@
-package umc.server.domain.mapping.mapping;
+package umc.server.domain.mapping.mapping.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

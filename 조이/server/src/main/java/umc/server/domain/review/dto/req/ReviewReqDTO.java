@@ -6,10 +6,11 @@ import lombok.Getter;
 public class ReviewReqDTO {
     @Builder
     @Getter
-    public static class ReviewDTO {
-        private String content;
-        private String title;
-        private Long memberId;
-        private Double star;
+    public static class WriteReviewReqDTO {
+        public String content;
+        public String title;
+        public Long memberId;
+        public Float star;
     }
+    
 }

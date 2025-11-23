@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.member.repository.MemberRepository;
 import umc.server.domain.review.dto.req.ReviewReqDTO;
+import umc.server.domain.review.dto.res.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
 import umc.server.domain.store.entity.Store;
 import umc.server.domain.store.repository.StoreRepository;
+import umc.server.global.apiPaylaod.code.GeneralErrorCode;
+import umc.server.global.apiPaylaod.exception.GeneralException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,21 +23,27 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public void createReview(Long storeId, ReviewReqDTO.ReviewDTO request){
+    public ReviewResDTO.ReviewDTO  createReview(Long storeId, ReviewReqDTO.WriteReviewReqDTO dto){
         Member member;
-            member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new IllegalArgumentException("멤버 읍슈"));
+            member = memberRepository.findById(dto.getMemberId()).orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
         ;
-        Store store=storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("가게 읍슈"));
+        Store store=storeRepository.findById(storeId).orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
 
-        Review review= Review.builder()
+        Review review;
+        review = Review.builder()
                 .member(member)
                 .store(store)
-                .reviewContext(request.getContent())
-                .star(request.getStar())
+                .reviewContext(dto.getContent())
+                .star(dto.getStar())
                 .build();
         reviewRepository.save(review);
 
-    }
+        return ReviewResDTO.ReviewDTO.builder()
+                .reviewId(review.getId())
+                .reviewContext(review.getReviewContext())
+                .star(review.getStar())
+                .build();
 
+    }
 
 }
