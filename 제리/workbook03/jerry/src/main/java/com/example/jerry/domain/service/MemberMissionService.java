@@ -1,6 +1,7 @@
 package com.example.jerry.domain.service;
 
 
+import com.example.jerry.domain.converter.MemberMissionConverter;
 import com.example.jerry.domain.dto.response.MemberMissionResDto;
 import com.example.jerry.domain.dto.request.MissionChallengeReqDto;
 import com.example.jerry.domain.entity.Member;
@@ -53,58 +54,33 @@ public class MemberMissionService {
         return MemberMissionResDto.from(memberMission);
     }
 
-    // 미완료 미션 조회
-    public Page<MemberMissionResDto> getMissionsByStatus(Long memberId, String status, Pageable pageable) {
 
-        Page<MemberMission> missions;
-
-        if (status.equalsIgnoreCase("cleared")) {
-            missions = memberMissionRepository.findByMember_MemberIdAndClearTrue(memberId, pageable);
-
-        } else if (status.equalsIgnoreCase("uncleared")) {
-            missions = memberMissionRepository.findByMember_MemberIdAndClearFalse(memberId, pageable);
-
-        } else {
-            throw new TestException(MemberMissionErrorCode.INVALID_STATUS);
-        }
-
-        return missions.map(MemberMissionResDto::from);
-    }
-
-    // 완료된 미션 조회
-    public Page<MemberMissionResDto> getClearedMissions(Long memberId, Pageable pageable) {
-        Page<MemberMission> missions =
-                memberMissionRepository.findByMember_MemberIdAndClearTrue(memberId, pageable);
-
-        return missions.map(MemberMissionResDto::from);
-    }
-
-    // 특정 미션 완료 처리
     public MemberMissionResDto clearMission(Long memberId, Long missionId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new TestException(MemberMissionErrorCode.MEMBER_NOT_FOUND));
-
-        Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new TestException(MemberMissionErrorCode.MISSION_NOT_FOUND));
-
-        MemberMission mm = memberMissionRepository
-                .findByMember_MemberIdAndMission_MissionId(memberId, missionId)
+        MemberMission mm = memberMissionRepository.findByMember_MemberIdAndMission_MissionId(memberId, missionId)
                 .orElseThrow(() -> new TestException(MemberMissionErrorCode.MEMBER_MISSION_NOT_FOUND));
 
-        if (mm.getClear()) {
+        if (Boolean.TRUE.equals(mm.getClear())) {
             throw new TestException(MemberMissionErrorCode.ALREADY_COMPLETED);
         }
 
-        mm = MemberMission.builder()
+        MemberMission updated = MemberMission.builder()
                 .userMissionId(mm.getUserMissionId())
-                .member(member)
-                .mission(mission)
+                .member(mm.getMember())
+                .mission(mm.getMission())
                 .clear(true)
                 .build();
 
-        memberMissionRepository.save(mm);
+        memberMissionRepository.save(updated);
 
-        return MemberMissionResDto.from(mm);
+        return MemberMissionResDto.from(updated);
+    }
+
+    public MemberMissionResDto.MemberMissionPageDto getInProgressMissions(Long memberId, Pageable pageable) {
+
+        Page<MemberMission> page =
+                memberMissionRepository.findByMember_MemberIdAndClearFalse(memberId, pageable);
+
+        return MemberMissionConverter.toInProgressPage(page);
     }
 }

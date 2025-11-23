@@ -1,5 +1,6 @@
 package com.example.jerry.domain.service;
 
+import com.example.jerry.domain.converter.MissionConverter;
 import com.example.jerry.domain.dto.request.MissionCreateReqDto;
 import com.example.jerry.domain.dto.request.MissionReqDto;
 import com.example.jerry.domain.dto.response.MissionResDto;
@@ -10,7 +11,9 @@ import com.example.jerry.domain.exception.code.MissionErrorCode;
 import com.example.jerry.domain.repository.MissionRepository;
 import com.example.jerry.domain.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,5 +66,13 @@ public class MissionService {
         return missions.stream()
                 .map(MissionResDto::from)
                 .toList();
+
+
+    }
+    public MissionResDto.MissionPageDto getMissionsByRestaurant(Integer restaurantId, Pageable pageable) {
+
+        Page<Mission> page = missionRepository.findByRestaurant_RestaurantsId(restaurantId, pageable);
+
+        return MissionConverter.toRestaurantMissionPage(page);
     }
 }

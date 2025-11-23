@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -29,5 +30,16 @@ public class ReviewResDto {
                 .memberId(review.getMember().getMemberId())
                 .restaurantId(review.getRestaurant().getRestaurantsId())
                 .build();
+    }
+
+    @Getter
+    @Builder
+    public static class ReviewPageDto {
+        private List<ReviewResDto> reviewList;
+        private Integer listSize;
+        private Integer totalPage;
+        private Long totalElements;
+        private Boolean isFirst;
+        private Boolean isLast;
     }
 }
