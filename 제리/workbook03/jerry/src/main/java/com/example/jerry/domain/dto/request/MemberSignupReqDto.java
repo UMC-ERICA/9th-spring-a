@@ -2,13 +2,18 @@ package com.example.jerry.domain.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
+import java.util.List;
+
+@Getter @Setter
 @NoArgsConstructor
-public class MemberReqDto {
+public class MemberSignupReqDto {
 
     private String email;
     private String password;
     private String name;
     private String phone;
+
+    private List<Integer> preferCategory;
 }

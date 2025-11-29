@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Builder
@@ -29,5 +30,16 @@ public class MissionResDto {
                 .restaurantName(mission.getRestaurant().getName())
                 .restaurantAddress(mission.getRestaurant().getAddress().getAddress())
                 .build();
+    }
+
+    @Getter
+    @Builder
+    public static class MissionPageDto {
+        private List<MissionResDto> missionList;
+        private Integer listSize;
+        private Integer totalPage;
+        private Long totalElements;
+        private Boolean isFirst;
+        private Boolean isLast;
     }
 }
