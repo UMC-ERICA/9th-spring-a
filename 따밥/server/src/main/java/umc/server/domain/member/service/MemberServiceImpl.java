@@ -1,6 +1,8 @@
 package umc.server.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,16 @@ import umc.server.domain.member.repository.FoodRepository;
 import umc.server.domain.member.repository.MemberAddressRepository;
 import umc.server.domain.member.repository.MemberFoodRepository;
 import umc.server.domain.member.repository.MemberRepository;
+import umc.server.domain.mission.converter.MissionConverter;
+import umc.server.domain.mission.dto.MissionResDTO;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.entity.mapping.MemberMission;
 import umc.server.domain.mission.exception.MissionErrorCode;
 import umc.server.domain.mission.exception.MissionException;
 import umc.server.domain.mission.repository.MemberMissionRepository;
 import umc.server.domain.mission.repository.MissionRepository;
+import umc.server.domain.review.converter.ReviewConverter;
+import umc.server.domain.review.dto.res.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
 
@@ -137,13 +143,13 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
-    public MemberResDTO.MyReviewsDTO getMyReviews(Long memberId) {
+    public ReviewResDTO.ReviewPreViewListDTO getMyReviews(Long memberId, Integer page) {
         Member member = findByUsername(memberId);
+        PageRequest pageRequest = PageRequest.of(page, 5);
 
+        Page<Review> result = reviewRepository.findAllByMemberId(memberId, pageRequest);
 
-        List<Review> reviews = reviewRepository.findAllByMemberId(memberId);
-
-        return MemberConverter.toMyReviewsDTO(member, reviews);
+        return ReviewConverter.toReviewPreViewListDTO(result);
     }
 
     @Override
@@ -157,6 +163,21 @@ public class MemberServiceImpl implements MemberService{
         memberMissionRepository.save(memberMission);
 
         return MemberConverter.toChallengeMissionDTO(memberMission);
+    }
+
+    @Override
+    public MissionResDTO.MissionPreviewList getMyMissions(Long memberId, Integer page) {
+        Member member = findByUsername(memberId);
+        Pageable pageable = PageRequest.of(page, 5);
+
+        Integer totalCount = memberMissionRepository.countInProgressMissions(memberId, false);
+        List<MemberMission> mm = memberMissionRepository.findInProgressMissionsFirstPage(memberId, false, pageable);
+
+        Page<MemberMission> memberMissionPage = new PageImpl<>(mm, pageable, totalCount);
+
+        Page<Mission> missionPage = memberMissionPage.map(MemberMission::getMission);
+
+        return MissionConverter.toMissionPreviewList(missionPage);
     }
 
     private void validateRequest(MemberReqDTO.JoinDTO request) {

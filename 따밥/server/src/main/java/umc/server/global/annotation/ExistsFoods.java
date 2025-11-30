@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = FoodExistValidator.class)
-@Target( {ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+@Target(value = {ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistsFoods {
     // @interface : 커스텀 어노테이션 만들기

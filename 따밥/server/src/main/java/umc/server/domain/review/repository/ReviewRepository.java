@@ -1,10 +1,13 @@
 package umc.server.domain.review.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.service.ReviewQueryDsl;
+import umc.server.domain.store.entity.Store;
 
 import java.util.List;
 
@@ -13,7 +16,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQue
     "JOIN FETCH r.store s " +
     "WHERE r.member.id = :memberId " +
     "ORDER BY r.createdAt DESC")
-    List<Review> findAllByMemberId(@Param("memberId") Long memberId);
+    Page<Review> findAllByMemberId(@Param("memberId") Long memberId, PageRequest pageRequest);
 
     @Query("SELECT r FROM Review r JOIN FETCH r.member WHERE r.store.id = :storeId")
     List<Review> findByStoreIdWithMember(@Param("storeId") Long storeId);
@@ -48,4 +51,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQue
     // 특정한 store에 별점을 남긴 사람들의 평균
     @Query("SELECT AVG (r.score) FROM Review r WHERE r.store.id = :storeId")
     Double findAvgByStoreId(@Param("storeId") Long storeId);
+
+    Page<Review> findAllByStore(Store store, PageRequest pageRequest);
 }
