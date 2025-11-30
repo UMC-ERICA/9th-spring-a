@@ -1,5 +1,7 @@
 package umc.server.domain.member.dto.req;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.cglib.core.Local;
@@ -12,7 +14,12 @@ import java.util.List;
 public class MemberReqDTO {
     @Builder
     public record JoinDTO(
+            @NotBlank
             String name,
+            @Email
+            String email,
+            @NotBlank
+            String password,
             Gender gender,
             LocalDate birth,
             String address,
@@ -22,6 +29,8 @@ public class MemberReqDTO {
     ){}
     @Builder
     public record LoginDTO(
-            String memberId
+            String memberId,
+            String email,
+            String password
     ){}
 }
