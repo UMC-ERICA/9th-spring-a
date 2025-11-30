@@ -12,6 +12,7 @@ public enum ReviewErrorCode implements BaseErrorCode {
             "REVIEW404_1",
             "해당 리뷰를 찾지 못했습니다");
     private HttpStatus status;
-    private String message;
     private String code;
+    private String message;
+
 }

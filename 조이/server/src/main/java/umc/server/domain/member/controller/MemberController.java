@@ -1,5 +1,6 @@
 package umc.server.domain.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.server.domain.member.dto.req.MemberReqDTO;
@@ -21,7 +22,7 @@ import umc.server.global.apiPaylaod.code.GeneralSuccessCode;
         // 회원가입
         @PostMapping("/sign-up")
         public ApiResponse<MemberResDTO.JoinDTO> signUp(
-                @RequestBody MemberReqDTO.JoinDTO dto
+                @RequestBody @Valid MemberReqDTO.JoinDTO dto
         ){
             return ApiResponse.onSuccess(MemberSuccessCode.FOUND,memberService.signup(dto));
         }
