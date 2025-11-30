@@ -3,6 +3,7 @@ package umc.server.domain.store.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import umc.server.domain.mapping.mapping.entity.MemberMission;
 import umc.server.domain.review.entity.Review;
 import umc.server.global.BaseEntity;
 
@@ -25,11 +26,21 @@ public class Store extends BaseEntity {
     private String name;
 
     @Column(name = "ceosnum", length = 9, nullable = false)
-    private Integer ceosnum;
+    private String ceosnum;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> review = new ArrayList<>();
 
+    @OneToMany(mappedBy = "store", cascade=CascadeType.ALL)
+    private List<StoreAddr> storeAddr = new ArrayList<>();
 
+    @OneToMany(mappedBy = "store" ,cascade=CascadeType.ALL)
+    private List<MemberMission> membermission= new ArrayList<>();
+
+    // Store.java
+    public void addStoreAddr(StoreAddr storeAddr) {
+        this.storeAddr.add(storeAddr); // Store의 리스트에 추가
+        storeAddr.setStore(this);      // StoreAddr의 store 필드에도 연결
+    }
 
 }

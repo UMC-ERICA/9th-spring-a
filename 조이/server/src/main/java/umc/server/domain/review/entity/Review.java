@@ -3,6 +3,7 @@ package umc.server.domain.review.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Component;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.store.entity.Store;
 import umc.server.global.BaseEntity;
@@ -22,7 +23,13 @@ public class Review extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Double star;
+    private String name;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private Float star;
 
     @Column(nullable = false)
     private String reviewContext;

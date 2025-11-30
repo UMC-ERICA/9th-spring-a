@@ -2,9 +2,9 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import umc.server.domain.mapping.mapping.MemberFood;
-import umc.server.domain.mapping.mapping.MemberMission;
-import umc.server.domain.mapping.mapping.MemberTerm;
+import umc.server.domain.mapping.mapping.entity.MemberFood;
+import umc.server.domain.mapping.mapping.entity.MemberMission;
+import umc.server.domain.mapping.mapping.entity.MemberTerm;
 import umc.server.domain.member.enums.Gender;
 import umc.server.domain.review.entity.Review;
 import umc.server.global.BaseEntity;

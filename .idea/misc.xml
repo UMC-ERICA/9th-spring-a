@@ -4,6 +4,8 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/따밥/server" />
+    <file type="web" url="file://$PROJECT_DIR$/와나/server" />
+    <file type="web" url="file://$PROJECT_DIR$/제리/server" />
     <file type="web" url="file://$PROJECT_DIR$/조이/server" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">

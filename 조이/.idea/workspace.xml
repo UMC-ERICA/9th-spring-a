@@ -7,7 +7,71 @@
     <list default="true" id="aa9af72d-34dd-40d0-ac3a-80ecf9f025ad" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules/umc.server.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules/조이.server.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/8.14.3/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/file-system.probe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/ServerApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberFood$MemberFoodBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberFood.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberMission$MemberMissionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberMission.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberTerm$MemberTermBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mapping/mapping/MemberTerm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Food$FoodBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Food.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Member$MemberBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Member.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Question$QuestionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Question.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Term$TermBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/entity/Term.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/enums/Context.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/enums/FoodType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/enums/Gender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/member/enums/Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mission/entity/Mission$MissionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mission/entity/Mission.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/mission/enums/Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/review/entity/Review$ReviewBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/review/entity/Review.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/review/entity/ReviewReply$ReviewReplyBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/review/entity/ReviewReply.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/store/entity/Store$StoreBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/store/entity/Store.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/store/entity/StoreAddr$StoreAddrBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/domain/store/entity/StoreAddr.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/classes/java/main/umc/server/global/BaseEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/reports/problems/problems-report.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/resources/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mapping/mapping/MemberMissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mapping/mapping/MemberMissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/member/entity/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/member/entity/Term.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/member/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/member/repository/MemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mission/entity/Mission.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mission/entity/Mission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mission/repository/MissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/mission/repository/MissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/review/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/review/entity/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/review/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/review/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/store/entity/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/store/entity/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/store/repository/StoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/umc/server/domain/store/repository/StoreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,10 +183,35 @@
       <workItem from="1762267387775" duration="927000" />
       <workItem from="1762268587569" duration="84000" />
       <workItem from="1762268773951" duration="35000" />
+      <workItem from="1762740587477" duration="213000" />
+      <workItem from="1762741124884" duration="34000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/조이" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

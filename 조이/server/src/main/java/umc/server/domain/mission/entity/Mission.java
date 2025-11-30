@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 import lombok.*;
-import umc.server.domain.mapping.mapping.MemberMission;
+import umc.server.domain.mapping.mapping.entity.MemberMission;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.store.entity.Store;
 
@@ -36,7 +36,7 @@ public class Mission {
     private LocalDate mlimit;
 
     @Column(name = "finishscore", nullable = false)
-    private Integer finishscore;
+    private Float finishscore;
 
     @OneToMany(mappedBy = "mission" , cascade = CascadeType.ALL)
     private List<MemberMission> membermission= new ArrayList<>();

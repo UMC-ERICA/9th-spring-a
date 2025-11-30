@@ -3,7 +3,7 @@ package umc.server.domain.member.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import umc.server.domain.mapping.mapping.MemberTerm;
+import umc.server.domain.mapping.mapping.entity.MemberTerm;
 import umc.server.domain.member.enums.Context;
 
 import java.util.ArrayList;

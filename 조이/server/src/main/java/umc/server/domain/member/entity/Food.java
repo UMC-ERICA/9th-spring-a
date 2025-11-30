@@ -2,7 +2,7 @@ package umc.server.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import umc.server.domain.mapping.mapping.MemberFood;
+import umc.server.domain.mapping.mapping.entity.MemberFood;
 import umc.server.domain.member.enums.FoodType;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package umc.server.domain.mapping.mapping;
+package umc.server.domain.mapping.mapping.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -6,6 +6,7 @@ import lombok.*;
 import umc.server.domain.member.entity.Member;
 import umc.server.domain.mission.entity.Mission;
 import umc.server.domain.mission.enums.Status;
+import umc.server.domain.store.entity.Store;
 
 @Entity
 @Builder
@@ -30,4 +31,8 @@ public class MemberMission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Mission_id")
     private Mission mission;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Store_id")
+    private Store store;
 }

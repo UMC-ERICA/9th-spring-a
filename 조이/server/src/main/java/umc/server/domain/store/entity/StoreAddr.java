@@ -11,7 +11,7 @@ import umc.server.global.BaseEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = "StoreAddr")
+@Table(name = "storeAddr")
 
 public class StoreAddr extends BaseEntity {
 
@@ -19,7 +19,7 @@ public class StoreAddr extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="Store_id")
     private Store store;
 
@@ -41,4 +41,8 @@ public class StoreAddr extends BaseEntity {
         this.addr3 = addr3;
         this.addr4 = addr4;
     }
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
 }
