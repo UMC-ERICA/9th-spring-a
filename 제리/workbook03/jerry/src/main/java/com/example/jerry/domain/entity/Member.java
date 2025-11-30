@@ -1,5 +1,6 @@
 package com.example.jerry.domain.entity;
 
+import com.example.jerry.global.auth.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class Member {
 
     @Column(length = 200, nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(length = 30, nullable = false)
     private String name;
