@@ -21,7 +21,10 @@ public enum MemberErrorCode implements BaseErrorCode {
             "이미 사용중인 전화번호입니다."),
     MEMBER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND,
             "MEMBER404_2",
-            "해당 회원에게 요청한 미션이 할당된 적 없습니다.")
+            "해당 회원에게 요청한 미션이 할당된 적 없습니다."),
+    PASSWORD_INVALID(HttpStatus.BAD_REQUEST,
+            "비밀번호가 잘못되었습니다.",
+            "MEMBER400_3"),
     ;
 
 

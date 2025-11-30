@@ -26,6 +26,12 @@ public class MemberReqDTO {
         String addr4
     ){}
 
+    // 로그인
+    public record LoginDTO(
+            @NotBlank String email,
+            @NotBlank String password
+    ){}
+
     @Getter
     public static class HomeDTO{
         private String region;
