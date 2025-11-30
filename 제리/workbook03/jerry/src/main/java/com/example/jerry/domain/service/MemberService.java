@@ -16,6 +16,7 @@ import com.example.jerry.domain.exception.TestException;
 import com.example.jerry.domain.repository.FoodRepository;
 import com.example.jerry.domain.repository.MemberRepository;
 import com.example.jerry.domain.repository.MemberPreferenceRepository;
+import com.example.jerry.global.auth.JwtUtil;
 import com.example.jerry.global.auth.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ public class MemberService {
     private final FoodRepository foodRepository;
     private final MemberPreferenceRepository memberPreferenceRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     // 회원가입
 
@@ -47,11 +49,10 @@ public class MemberService {
 
         String encodedPassword = passwordEncoder.encode(req.getPassword());
 
-        // Member 생성 및 저장
         Member member = MemberConverter.toMember(
                 req,
                 encodedPassword,
-                Role.ROLE_USER  // 기본 권한
+                Role.ROLE_USER
         );
 
         memberRepository.save(member);
@@ -77,7 +78,7 @@ public class MemberService {
             memberPreferenceRepository.saveAll(preferences);
         }
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 
 
@@ -91,7 +92,7 @@ public class MemberService {
             throw new TestException(MemberErrorCode.INVALID_LOGIN);
         }
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 
     // 멤버 단일 조회
@@ -100,6 +101,6 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new TestException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 }
