@@ -2,6 +2,7 @@ package umc.server.domain.member.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import umc.server.domain.mapping.mapping.entity.MemberFood;
 import umc.server.domain.mapping.mapping.repository.MemberFoodRepository;
@@ -10,6 +11,7 @@ import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Food;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.enums.Role;
 import umc.server.domain.member.exception.FoodException;
 import umc.server.domain.member.exception.code.FoodErrorCode;
 import umc.server.domain.member.repository.FoodRepository;
@@ -27,13 +29,16 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final MemberFoodRepository memberFoodRepository;
     private final FoodRepository foodRepository;
+    private final PasswordEncoder passwordEncoder;
     // 회원가입
     @Override
     public MemberResDTO.JoinDTO signup(
             MemberReqDTO.JoinDTO dto
     ) {
+        //솔트된 비밀번호생성
+        String salt= passwordEncoder.encode(dto.password());
         // 사용자 생성
-        Member member = MemberConverter.toMember(dto);
+        Member member = MemberConverter.toMember(dto,salt, Role.ROLE_USER);
         // DB 적용
         memberRepository.save(member);
         // 선호 음식 존재 여부 확인

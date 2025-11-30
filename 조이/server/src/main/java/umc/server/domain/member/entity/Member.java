@@ -6,6 +6,7 @@ import umc.server.domain.mapping.mapping.entity.MemberFood;
 import umc.server.domain.mapping.mapping.entity.MemberMission;
 import umc.server.domain.mapping.mapping.entity.MemberTerm;
 import umc.server.domain.member.enums.Gender;
+import umc.server.domain.member.enums.Role;
 import umc.server.domain.review.entity.Review;
 import umc.server.global.BaseEntity;
 
@@ -42,24 +43,36 @@ public class Member extends BaseEntity {
     @Column(name = "point",length=100)
     private Integer point;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable=false, unique=true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "tel", length=11)
     private String tel;
 
-    @OneToMany(mappedBy = "member" ,cascade = CascadeType.REMOVE) //member은 memberfood 엔티티 안의 필드이름
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.REMOVE)
+    @Builder.Default//member은 memberfood 엔티티 안의 필드이름
     private List<MemberFood> memberFoods= new ArrayList<>();
 
-    @OneToMany(mappedBy = "member" ,cascade = CascadeType.REMOVE) //member은 memberfood 엔티티 안의 필드이름
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.REMOVE)
+    @Builder.Default//member은 memberfood 엔티티 안의 필드이름
     private List<MemberTerm> memberTerms= new ArrayList<>();//arraylist로 초기화해서 널 값 아니고 빈 리스트로 존재 []
 
     @OneToMany(mappedBy = "member" )
+    @Builder.Default  // 빌더때매 패스워드 notnull무시되면서 로그인이안됏슨
     private List<MemberMission> membermission= new ArrayList<>();
 
+
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Question> questions = new ArrayList<>();
 }

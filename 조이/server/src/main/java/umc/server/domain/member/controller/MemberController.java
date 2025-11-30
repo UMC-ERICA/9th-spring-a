@@ -28,7 +28,7 @@ import umc.server.global.apiPaylaod.code.GeneralSuccessCode;
         }
 
         // 회원 로그인
-        @GetMapping("/{memberId}/login")
+        @PostMapping("/{memberId}/login")
         public ApiResponse<MemberResDTO.LoginDTO> login(
                 @RequestBody MemberReqDTO.LoginDTO dto) {
             return ApiResponse.onSuccess(MemberSuccessCode.FOUND, memberService.login(dto));
