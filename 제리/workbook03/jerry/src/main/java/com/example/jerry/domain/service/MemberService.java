@@ -2,6 +2,8 @@ package com.example.jerry.domain.service;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.example.jerry.domain.converter.MemberConverter;
 import com.example.jerry.domain.entity.Food;
 import com.example.jerry.domain.entity.Member;
 import com.example.jerry.domain.entity.MemberPreference;
@@ -14,7 +16,10 @@ import com.example.jerry.domain.exception.TestException;
 import com.example.jerry.domain.repository.FoodRepository;
 import com.example.jerry.domain.repository.MemberRepository;
 import com.example.jerry.domain.repository.MemberPreferenceRepository;
+import com.example.jerry.global.auth.JwtUtil;
+import com.example.jerry.global.auth.enums.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +32,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final FoodRepository foodRepository;
     private final MemberPreferenceRepository memberPreferenceRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     // 회원가입
 
@@ -40,13 +47,13 @@ public class MemberService {
             throw new TestException(MemberErrorCode.DUPLICATE_PHONE);
         }
 
-        // Member 생성 및 저장
-        Member member = Member.builder()
-                .email(req.getEmail())
-                .password(req.getPassword())
-                .name(req.getName())
-                .phone(req.getPhone())
-                .build();
+        String encodedPassword = passwordEncoder.encode(req.getPassword());
+
+        Member member = MemberConverter.toMember(
+                req,
+                encodedPassword,
+                Role.ROLE_USER
+        );
 
         memberRepository.save(member);
 
@@ -71,7 +78,7 @@ public class MemberService {
             memberPreferenceRepository.saveAll(preferences);
         }
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 
 
@@ -81,11 +88,11 @@ public class MemberService {
         Member member = memberRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new TestException(MemberErrorCode.INVALID_LOGIN));
 
-        if (!member.getPassword().equals(req.getPassword())) {
+        if (!passwordEncoder.matches(req.getPassword(), member.getPassword())) {
             throw new TestException(MemberErrorCode.INVALID_LOGIN);
         }
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 
     // 멤버 단일 조회
@@ -94,6 +101,6 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new TestException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-        return MemberResDto.from(member);
+        return MemberConverter.toMemberResDto(member);
     }
 }
