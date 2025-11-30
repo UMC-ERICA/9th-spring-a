@@ -43,10 +43,10 @@ public class MemberConverter {
     }
 
     // Optional<Member> 객체 -> LoginDTO
-    public static MemberResDTO.LoginDTO toLoginDTO(Member member){
+    public static MemberResDTO.LoginDTO toLoginDTO(Member member, String accessToken){
         return MemberResDTO.LoginDTO.builder()
                 .memberId(member.getId())
-                .memberNickname(member.getNickname())
+                .accessToken(accessToken)
                 .build();
     }
 

@@ -27,7 +27,7 @@ public class MemberResDTO {
     @Builder
     public static class LoginDTO{
         private Long memberId;
-        private String memberNickname;
+        private String accessToken;
     }
 
     @Getter

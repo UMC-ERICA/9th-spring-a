@@ -17,6 +17,10 @@ spring:
     properties:
       hibernate:
         format_sql: true #  SQL 쿼리 예쁘게
+jwt:
+  token:
+    secretKey: ${JWT_SECRET}
+    expiration: 14400000
 
 discord:
   webhook:

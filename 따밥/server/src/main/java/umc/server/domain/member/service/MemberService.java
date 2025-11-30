@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface MemberService {
     Member findByUsername(Long memberId);
     MemberResDTO.JoinDTO join(MemberReqDTO.JoinDTO request);
+    MemberResDTO.LoginDTO login(MemberReqDTO.LoginDTO request);
     MemberResDTO.HomeTopDTO getHomeTop(Long memberId, String region, Long cursor, int size);
     void missionSuccess(Long memberId, Long missionId);
     MemberResDTO.MyPageDTO getMyPage(Long memberId);

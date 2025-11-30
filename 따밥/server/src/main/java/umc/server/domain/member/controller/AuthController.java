@@ -22,12 +22,11 @@ public class AuthController {
 
     @GetMapping("/login")
     public ApiResponse<MemberResDTO.LoginDTO> login(
-            @RequestParam Long memberId
+            MemberReqDTO.@Valid LoginDTO request
     ){
-        Member member = memberService.findByUsername(memberId);
-        GeneralSuccessCode code = GeneralSuccessCode._OK;
         return ApiResponse.success(
-                code, MemberConverter.toLoginDTO(member)
+                MemberSuccessCode.MEMBER_FOUND,
+                memberService.login(request)
         );
     }
 

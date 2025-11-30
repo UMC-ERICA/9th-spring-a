@@ -1,5 +1,6 @@
 package umc.server.domain.member.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,6 +35,12 @@ import umc.server.domain.review.converter.ReviewConverter;
 import umc.server.domain.review.dto.res.ReviewResDTO;
 import umc.server.domain.review.entity.Review;
 import umc.server.domain.review.repository.ReviewRepository;
+<<<<<<< Updated upstream
+=======
+import umc.server.global.auth.CustomUserDetails;
+import umc.server.global.auth.JwtUtil;
+import umc.server.global.auth.enums.Role;
+>>>>>>> Stashed changes
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +59,12 @@ public class MemberServiceImpl implements MemberService{
     private final MemberFoodRepository memberFoodRepository;
     private final MissionRepository missionRepository;
 
+<<<<<<< Updated upstream
+=======
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+
+>>>>>>> Stashed changes
     @Override
     public Member findByUsername(Long memberId) {
         return memberRepository.findById(memberId)
@@ -86,6 +99,22 @@ public class MemberServiceImpl implements MemberService{
         }
 
         return MemberConverter.toJoinDTO(member);
+    }
+
+    @Override
+    public MemberResDTO.LoginDTO login(MemberReqDTO.@Valid LoginDTO request) {
+        Member member = memberRepository.findByEmail(request.email())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(request.password(), member.getPassword())) {
+            throw new MemberException(MemberErrorCode.PASSWORD_INVALID);
+        }
+
+        CustomUserDetails userDetails = new CustomUserDetails(member);
+
+        String accessToken = jwtUtil.createAccessToken(userDetails);
+
+        return MemberConverter.toLoginDTO(member, accessToken);
     }
 
     @Override
