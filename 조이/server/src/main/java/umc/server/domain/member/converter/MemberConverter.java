@@ -5,6 +5,7 @@ import lombok.Getter;
 import umc.server.domain.member.dto.req.MemberReqDTO;
 import umc.server.domain.member.dto.res.MemberResDTO;
 import umc.server.domain.member.entity.Member;
+import umc.server.domain.member.enums.Role;
 
 public class MemberConverter {
 
@@ -20,10 +21,15 @@ public class MemberConverter {
 
     // DTO -> Entity
     public static Member toMember(
-            MemberReqDTO.JoinDTO dto
+            MemberReqDTO.JoinDTO dto,
+            String password,
+            Role role
     ){
         return Member.builder()
                 .name(dto.name())
+                .email(dto.email())
+                .password(password)
+                .role(role)
                 .birth(dto.birth())
                 .address(dto.address())
                 .gender(dto.gender())
